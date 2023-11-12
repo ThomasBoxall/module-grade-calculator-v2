@@ -51,16 +51,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class QuickCalculator extends StatefulWidget {
-  const QuickCalculator({super.key, required this.title});
 
-  final String title;
+class AddEditPage extends StatefulWidget {
+  const AddEditPage({super.key});
 
   @override
-  State<QuickCalculator> createState() => _QuickCalculatorState();
+  State<AddEditPage> createState() => _AddEditPageState();
 }
 
-class _QuickCalculatorState extends State<QuickCalculator> {
+class _AddEditPageState extends State<AddEditPage> {
 
   late TextEditingController assessmentNameController = TextEditingController();
   late TextEditingController assessmentPercentageOfModuleController = TextEditingController();
@@ -80,7 +79,7 @@ class _QuickCalculatorState extends State<QuickCalculator> {
       appBar: AppBar(
         
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("Add Edit Thing DO SOMEBETTERTITLINGHERE SOMETIME"),
       ),
       body: Center(
         child: Column(
@@ -129,7 +128,7 @@ class _QuickCalculatorState extends State<QuickCalculator> {
                 spacing: 12,
                 children: <Widget>[
                   OutlinedButton(
-                    onPressed: () {  },
+                    onPressed: () { Navigator.pop(context); },
                     child: const Text("Back")
                   ),
                   FilledButton(
@@ -141,6 +140,46 @@ class _QuickCalculatorState extends State<QuickCalculator> {
             )
           ]
         ),
+      ),
+    );
+  }
+}
+
+class QuickCalculator extends StatefulWidget {
+  const QuickCalculator({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<QuickCalculator> createState() => _QuickCalculatorState();
+}
+
+class _QuickCalculatorState extends State<QuickCalculator> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      appBar: AppBar(
+        
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'push the button... go on, i dare you',
+            ),
+          ]
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage()));},
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(
         destinations: navigationDestinations,
