@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'Assessment.dart';
+
 
 int currentPageIndex = 1;
 
 const navigationDestinations = [
-    NavigationDestination(icon: Icon(Icons.abc), label: 'Load Module'),
-    NavigationDestination(icon: Icon(Icons.accessibility), label: 'Quick Calculator'),
-    NavigationDestination(icon: Icon(Icons.info_outline), label: 'About'),
+    NavigationDestination(icon: Icon(Icons.folder_open_outlined), selectedIcon: Icon(Icons.folder_open), label: 'Load Module'),
+    NavigationDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: 'Quick Calculator'),
+    NavigationDestination(icon: Icon(Icons.info_outline), selectedIcon: Icon(Icons.info), label: 'About'),
   ];
-
-// function which detmines based on a number which page you want to be sent to (fn called when tap on icon on nav bar returns index from 0 to 2. we have to keep tabs on which page wants to be opened ourselves). return string, name of the page we are trying to go to (path to the file in the webserver)
-// also need a var to store page which is open - f u says flutter we have to keep tabs on this
 
 String getNewPageIndexStr(int newPageIndexInt){
   currentPageIndex = newPageIndexInt;
@@ -38,12 +37,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Module Grade Calculator',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const QuickCalculator(title: 'Flutter Demo Home Page'),
+      home: const QuickCalculator(title: 'Quick Calculator'),
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModule(title: 'Load Module'),
         "/about":(context) => const About(title: 'About')
@@ -62,8 +61,20 @@ class QuickCalculator extends StatefulWidget {
 }
 
 class _QuickCalculatorState extends State<QuickCalculator> {
+
+  late TextEditingController assessmentNameController = TextEditingController();
+  late TextEditingController assessmentPercentageOfModuleController = TextEditingController();
+  late TextEditingController markPercentageOfAssessmentController = TextEditingController();
+  late TextEditingController assessmentIconController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
+    // build the list used to populate 
+    final List<DropdownMenuEntry<AssessmentTypes>> assessmentTypes = <DropdownMenuEntry<AssessmentTypes>>[];
+    for(final AssessmentTypes assessmentType in AssessmentTypes.values){
+      assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label));
+    }
     
     return Scaffold(
       appBar: AppBar(
@@ -71,16 +82,64 @@ class _QuickCalculatorState extends State<QuickCalculator> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        
+      body: Center(
         child: Column(
-          
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Quick Calculator',
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints){
+                  return DropdownMenu<AssessmentTypes>(
+                    controller: assessmentIconController,
+                    enableFilter: true,
+                    leadingIcon: const Icon(Icons.search),
+                    label: const Text('Assessment Type'),
+                    dropdownMenuEntries: assessmentTypes,
+                    width: constraints.maxWidth
+                  );
+                }
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: TextFormField(
+                controller: assessmentNameController,
+                decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Assessment Name')
+                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: TextFormField(
+                controller: assessmentPercentageOfModuleController,
+                decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Assessment Percentage')
+              )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: TextFormField(
+                controller: markPercentageOfAssessmentController,
+                decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark')
+              )
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                spacing: 12,
+                children: <Widget>[
+                  OutlinedButton(
+                    onPressed: () {  },
+                    child: const Text("Back")
+                  ),
+                  FilledButton(
+                    onPressed: () {  },
+                    child: const Text("Save")
+                  ),
+                ],
+              ),
             )
-          ],
+          ]
         ),
       ),
       bottomNavigationBar: NavigationBar(
