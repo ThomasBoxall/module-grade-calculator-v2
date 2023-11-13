@@ -72,7 +72,7 @@ class _AddEditPageState extends State<AddEditPage> {
     // build the list used to populate 
     final List<DropdownMenuEntry<AssessmentTypes>> assessmentTypes = <DropdownMenuEntry<AssessmentTypes>>[];
     for(final AssessmentTypes assessmentType in AssessmentTypes.values){
-      assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label));
+      assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label, leadingIcon: Icon(assessmentType.icon)));
     }
     
     return Scaffold(
