@@ -25,6 +25,13 @@ String getNewPageIndexStr(int newPageIndexInt){
   }
 }
 
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
+
 
 void main() {
   runApp(const MyApp());
@@ -65,6 +72,8 @@ class _AddEditPageState extends State<AddEditPage> {
   late TextEditingController assessmentPercentageOfModuleController = TextEditingController();
   late TextEditingController markPercentageOfAssessmentController = TextEditingController();
   late TextEditingController assessmentIconController = TextEditingController();
+  
+  final _addEditFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -82,63 +91,92 @@ class _AddEditPageState extends State<AddEditPage> {
         title: Text("Add Edit Thing DO SOMEBETTERTITLINGHERE SOMETIME"),
       ),
       body: Center(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints){
-                  return DropdownMenu<AssessmentTypes>(
-                    controller: assessmentIconController,
-                    enableFilter: true,
-                    leadingIcon: const Icon(Icons.search),
-                    label: const Text('Assessment Type'),
-                    dropdownMenuEntries: assessmentTypes,
-                    width: constraints.maxWidth
-                  );
-                }
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: TextFormField(
-                controller: assessmentNameController,
-                decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Assessment Name')
+        child: Form(
+          key: _addEditFormKey,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints){
+                    return DropdownMenu<AssessmentTypes>(
+                      controller: assessmentIconController,
+                      enableFilter: true,
+                      leadingIcon: const Icon(Icons.search),
+                      label: const Text('Assessment Type'),
+                      dropdownMenuEntries: assessmentTypes,
+                      width: constraints.maxWidth
+                    );
+                  }
                 ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: TextFormField(
-                controller: assessmentPercentageOfModuleController,
-                decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Assessment Percentage')
-              )
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: TextFormField(
-                controller: markPercentageOfAssessmentController,
-                decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark')
-              )
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                spacing: 12,
-                children: <Widget>[
-                  OutlinedButton(
-                    onPressed: () { Navigator.pop(context); },
-                    child: const Text("Back")
-                  ),
-                  FilledButton(
-                    onPressed: () {  },
-                    child: const Text("Save")
-                  ),
-                ],
               ),
-            )
-          ]
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: assessmentNameController,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Assessment Name')
+                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: assessmentPercentageOfModuleController,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Assessment Percentage'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: markPercentageOfAssessmentController,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark')
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  spacing: 12,
+                  children: <Widget>[
+                    OutlinedButton(
+                      onPressed: () { Navigator.pop(context); },
+                      child: const Text("Back")
+                    ),
+                    FilledButton(
+                      onPressed: () { 
+                        if(_addEditFormKey.currentState!.validate()){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const SizedBox(
+                                height: 40.0,
+                                child: Center(child: Text('Processing...')),
+                              ),
+                              duration: const Duration(milliseconds: 1500),
+                              width: 100.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal:8.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text("Save")
+                    ),
+                  ],
+                ),
+              )
+            ]
+          )
         ),
       ),
     );
