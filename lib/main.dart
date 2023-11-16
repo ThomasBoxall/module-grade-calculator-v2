@@ -86,6 +86,7 @@ class _AddEditPageState extends State<AddEditPage> {
   late TextEditingController assessmentPercentageOfModuleController = TextEditingController();
   late TextEditingController markPercentageOfAssessmentController = TextEditingController();
   late TextEditingController assessmentIconController = TextEditingController();
+  bool assessmentTakenCheckboxValue = true;
   
   final _addEditFormKey = GlobalKey<FormState>();
 
@@ -156,16 +157,36 @@ class _AddEditPageState extends State<AddEditPage> {
                 )
               ),
               Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                child: CheckboxListTile(
+                  value: assessmentTakenCheckboxValue,
+                  onChanged: (bool? value){
+                    print("checkbox value ${value}");
+                    setState(() {
+                      assessmentTakenCheckboxValue = value!;
+                      markPercentageOfAssessmentController.clear();
+                    });
+                  },
+                  title: const Text("Taken Assessment")
+                )
+              ),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextFormField(
                   controller: markPercentageOfAssessmentController,
                   decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark'),
+                  enabled: assessmentTakenCheckboxValue,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a value';
-                    } else if(isDouble(value)){
-                      if(double.parse(value) > 100 || double.parse(value) < 0){
-                        return 'Please enter a value between 0 and 100';
+                    if (assessmentTakenCheckboxValue){
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a value';
+                      }
+                      if(!isDouble(value)){
+                        return 'Please enter a value';
+                      } else{
+                        if(double.parse(value) > 100 || double.parse(value) < 0){
+                          return 'Please enter a value between 0 and 100';
+                        }
                       }
                     }
                     return null;
