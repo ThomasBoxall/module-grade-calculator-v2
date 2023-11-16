@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'cls/Assessment.dart';
+import 'cls/Module.dart';
 
 
 int currentPageIndex = 1;
@@ -25,7 +26,6 @@ String getNewPageIndexStr(int newPageIndexInt){
   }
 }
 
-
 bool isInt(String? s){
   if (s == null){
     return false;
@@ -40,8 +40,20 @@ bool isDouble(String? s){
   return double.tryParse(s) != null;
 }
 
+List <Module> myModules = [];
+int currentModule = -1; //this is used to set which module in myModules should be displayed on EdiModule. -1 means quick calculator
 
 void main() {
+  // lines below add assessments for testing
+  myModules.add(Module(true));
+  myModules[0].addAssessment(Assessment("Exam", 20, 80, Icon(Icons.computer), true));
+  myModules[0].addAssessment(Assessment("Exam", 21, 81, Icon(Icons.computer), true));
+  myModules[0].addAssessment(Assessment("Exam", 22, 82, Icon(Icons.computer), true));
+  print("myModules length ${myModules.length}");
+  print("myModules[0] assessments length: ${myModules[0].assessments.length}");
+
+  currentModule = 0;
+
   runApp(const MyApp());
 }
 
@@ -254,25 +266,69 @@ class EditModule extends StatefulWidget {
 
 class _EditModuleState extends State<EditModule> {
 
+  void refreshRoute(){
+    setState(() {
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'push the button... go on, i dare you',
-            ),
-          ]
-        ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: myModules[currentModule].getNoOfAssessments(),
+              itemBuilder: (BuildContext context, int index){
+                return ListTile(
+                  title: Text(myModules[currentModule].getAssessmentName(index)),
+                  subtitle: Text(myModules[currentModule].getAssessmentDisplaySubtext(index)),
+                  leading: myModules[currentModule].getAssessmentIcon(index),
+                  onTap: () {
+                    // OPEN ADD EDIT ROUTE HERE AND EDIT THE ASSESSMENT
+                  },
+                  trailing: PopupMenuButton<int>(
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 1,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.edit),
+                            Text("Edit"),
+                          ]
+                        )
+                      ),
+                      const PopupMenuItem(
+                        value: 2,
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.delete),
+                            Text("Delete"),
+                          ]
+                        )
+                      )
+                    ],
+                    onSelected:(value){
+                      if(value == 1){
+                        print("$index - 1");
+                      } else if (value == 2){
+                        //delete
+                        myModules[currentModule].deleteAssessment(index);
+                        refreshRoute();
+                      }
+                    },
+                  ),
+                );
+              }
+            )
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage()));},

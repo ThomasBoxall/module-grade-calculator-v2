@@ -6,7 +6,7 @@ class Assessment{
   
   String assessmentName;
   int assessmentPercentageOfModule;
-  int markPercentageOfAssessment;
+  double markPercentageOfAssessment;
   Icon assessmentIcon;
   bool taken;
 
