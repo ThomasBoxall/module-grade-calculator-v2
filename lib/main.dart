@@ -7,7 +7,7 @@ int currentPageIndex = 1;
 
 const navigationDestinations = [
     NavigationDestination(icon: Icon(Icons.folder_open_outlined), selectedIcon: Icon(Icons.folder_open), label: 'Load Module'),
-    NavigationDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: 'Quick Calculator'),
+    NavigationDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: 'Edit Module'),
     NavigationDestination(icon: Icon(Icons.info_outline), selectedIcon: Icon(Icons.info), label: 'About'),
   ];
 
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const QuickCalculator(title: 'Quick Calculator'),
+      home: const EditModule(title: 'Quick Calculator'),
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModule(title: 'Load Module'),
         "/about":(context) => const About(title: 'About')
@@ -120,7 +120,7 @@ class _AddEditPageState extends State<AddEditPage> {
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Assessment Type'),
                       dropdownMenuEntries: assessmentTypes,
-                      width: constraints.maxWidth
+                      width: constraints.maxWidth,
                     );
                   }
                 ),
@@ -218,16 +218,16 @@ class _AddEditPageState extends State<AddEditPage> {
   }
 }
 
-class QuickCalculator extends StatefulWidget {
-  const QuickCalculator({super.key, required this.title});
+class EditModule extends StatefulWidget {
+  const EditModule({super.key, required this.title});
 
   final String title;
 
   @override
-  State<QuickCalculator> createState() => _QuickCalculatorState();
+  State<EditModule> createState() => _EditModuleState();
 }
 
-class _QuickCalculatorState extends State<QuickCalculator> {
+class _EditModuleState extends State<EditModule> {
 
 
   @override
@@ -249,10 +249,11 @@ class _QuickCalculatorState extends State<QuickCalculator> {
           ]
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage()));},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        tooltip: 'Add new assessment',
+        label: const Text("Add"),
+        icon: const Icon(Icons.add),
       ),
       bottomNavigationBar: NavigationBar(
         destinations: navigationDestinations,
