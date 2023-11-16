@@ -32,14 +32,14 @@ String getNewPageIndexStr(int newPageIndexInt){
 //   return double.tryParse(s) != null;
 // }
 
-bool isInt(String s){
+bool isInt(String? s){
   if (s == null){
     return false;
   } 
   return int.tryParse(s) != null;
 }
 
-bool isDouble(String s){
+bool isDouble(String? s){
   if(s == null){
     return false;
   }
