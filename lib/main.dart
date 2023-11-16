@@ -25,8 +25,22 @@ String getNewPageIndexStr(int newPageIndexInt){
   }
 }
 
-bool isNumeric(String s) {
-  if (s == null) {
+// bool isNumeric(String s) {
+//   if (s == null) {
+//     return false;
+//   }
+//   return double.tryParse(s) != null;
+// }
+
+bool isInt(String s){
+  if (s == null){
+    return false;
+  } 
+  return int.tryParse(s) != null;
+}
+
+bool isDouble(String s){
+  if(s == null){
     return false;
   }
   return double.tryParse(s) != null;
@@ -88,11 +102,12 @@ class _AddEditPageState extends State<AddEditPage> {
       appBar: AppBar(
         
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Add Edit Thing DO SOMEBETTERTITLINGHERE SOMETIME"),
+        title: const Text("Add Edit Thing DO SOMEBETTERTITLINGHERE SOMETIME"),
       ),
       body: Center(
         child: Form(
           key: _addEditFormKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: <Widget>[
               Padding(
@@ -114,7 +129,13 @@ class _AddEditPageState extends State<AddEditPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextFormField(
                   controller: assessmentNameController,
-                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Assessment Name')
+                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Assessment Name'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    }
+                    return null;
+                  }
                   ),
               ),
               Padding(
@@ -124,7 +145,11 @@ class _AddEditPageState extends State<AddEditPage> {
                   decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Assessment Percentage'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
+                      return 'Please enter a value';
+                    } else if(!isInt(value)){
+                      return 'Please enter a whole number';
+                    } else if(int.parse(value) > 100 || int.parse(value) < 0){
+                      return 'Please enter a value between 0 and 100';
                     }
                     return null;
                   },
@@ -134,7 +159,17 @@ class _AddEditPageState extends State<AddEditPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextFormField(
                   controller: markPercentageOfAssessmentController,
-                  decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark')
+                  decoration: const InputDecoration(border: OutlineInputBorder(), suffix: Text("%"), labelText: 'Your Mark'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    } else if(isDouble(value)){
+                      if(double.parse(value) > 100 || double.parse(value) < 0){
+                        return 'Please enter a value between 0 and 100';
+                      }
+                    }
+                    return null;
+                  }
                 )
               ),
               Padding(
