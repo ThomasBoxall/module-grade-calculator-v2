@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Assessment.dart';
+import 'cls/Assessment.dart';
 
 
 int currentPageIndex = 1;
@@ -25,12 +25,6 @@ String getNewPageIndexStr(int newPageIndexInt){
   }
 }
 
-// bool isNumeric(String s) {
-//   if (s == null) {
-//     return false;
-//   }
-//   return double.tryParse(s) != null;
-// }
 
 bool isInt(String? s){
   if (s == null){
@@ -212,7 +206,7 @@ class _AddEditPageState extends State<AddEditPage> {
                                 height: 40.0,
                                 child: Center(child: Text('Processing...')),
                               ),
-                              duration: const Duration(milliseconds: 1500),
+                              duration: const Duration(milliseconds: 500),
                               width: 100.0, // Width of the SnackBar.
                               padding: const EdgeInsets.symmetric(
                                 horizontal:8.0, // Inner padding for SnackBar content.
@@ -224,6 +218,16 @@ class _AddEditPageState extends State<AddEditPage> {
                               backgroundColor: Colors.black.withOpacity(0.7),
                             ),
                           );
+                          print("Added assessment:");
+                          print("TYPE: ${assessmentIconController.text}");
+                          print("NAME: ${assessmentNameController.text}");
+                          print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
+                          print("TAKEN: ${assessmentTakenCheckboxValue}");
+                          print("% OF ASS: ${markPercentageOfAssessmentController.text}");
+                          Future.delayed(const Duration(milliseconds: 1505), (){
+                            Navigator.pop(context);
+                          });
+
                         }
                       },
                       child: const Text("Save")
