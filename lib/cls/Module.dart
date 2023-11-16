@@ -26,7 +26,7 @@ class Module{
 
   String getAssessmentName(int index) => assessments[index].assessmentName;
   String getAssessmentDisplaySubtext(int index) => "Score: ${assessments[index].markPercentageOfAssessment}% of ${assessments[index].assessmentPercentageOfModule}%";  
-  Icon getAssessmentIcon(int index) => assessments[index].assessmentIcon;
+  IconData getAssessmentIcon(int index) => assessments[index].assessmentType.icon;
 
 
 }

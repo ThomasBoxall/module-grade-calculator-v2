@@ -46,9 +46,9 @@ int currentModule = -1; //this is used to set which module in myModules should b
 void main() {
   // lines below add assessments for testing
   myModules.add(Module(true));
-  myModules[0].addAssessment(Assessment("Exam", 20, 80, Icon(Icons.computer), true));
-  myModules[0].addAssessment(Assessment("Exam", 21, 81, Icon(Icons.computer), true));
-  myModules[0].addAssessment(Assessment("Exam", 22, 82, Icon(Icons.computer), true));
+  myModules[0].addAssessment(Assessment("Exam", 20, 80, AssessmentTypes.cbt, true));
+  myModules[0].addAssessment(Assessment("Exam", 21, 81, AssessmentTypes.cbt, true));
+  myModules[0].addAssessment(Assessment("Exam", 22, 82, AssessmentTypes.cbt, true));
   print("myModules length ${myModules.length}");
   print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
@@ -231,7 +231,7 @@ class _AddEditPageState extends State<AddEditPage> {
                             ),
                           );
                           print("Added assessment:");
-                          print("TYPE: ${assessmentIconController.text}");
+                          print("TYPE: ${assessmentIconController}");
                           print("NAME: ${assessmentNameController.text}");
                           print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
                           print("TAKEN: ${assessmentTakenCheckboxValue}");
@@ -289,7 +289,7 @@ class _EditModuleState extends State<EditModule> {
                 return ListTile(
                   title: Text(myModules[currentModule].getAssessmentName(index)),
                   subtitle: Text(myModules[currentModule].getAssessmentDisplaySubtext(index)),
-                  leading: myModules[currentModule].getAssessmentIcon(index),
+                  leading: Icon(myModules[currentModule].getAssessmentIcon(index)),
                   onTap: () {
                     // OPEN ADD EDIT ROUTE HERE AND EDIT THE ASSESSMENT
                   },

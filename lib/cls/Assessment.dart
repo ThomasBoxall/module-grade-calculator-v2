@@ -7,11 +7,12 @@ class Assessment{
   String assessmentName;
   int assessmentPercentageOfModule;
   double markPercentageOfAssessment;
-  Icon assessmentIcon;
+  // Icon assessmentIcon;
   bool taken;
+  AssessmentTypes assessmentType;
 
 
-  Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentIcon,  this.taken);
+  Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentType,  this.taken);
 }
 
 enum AssessmentTypes {
