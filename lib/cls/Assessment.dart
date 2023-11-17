@@ -27,11 +27,12 @@ class Assessment{
 class AssessmentType{
   String name;
   IconData icon;
+  String code;
 
-  AssessmentType(this.name, this.icon);
+  AssessmentType(this.name, this.icon, this.code);
 }
 
 final Map<String, AssessmentType> assessmentTypes = {
-  "exam": AssessmentType("Exam", Icons.edit),
-  "cbt": AssessmentType("Computer Based Test", Icons.computer)
+  "exm": AssessmentType("Exam", Icons.edit, "exm"),
+  "cbt": AssessmentType("Computer Based Test", Icons.computer, "cbt")
 };

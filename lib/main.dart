@@ -127,7 +127,6 @@ class _AddEditPageState extends State<AddEditPage> {
       return menuItems;
     }
 
-
     return Scaffold(
       appBar: AppBar(
         
@@ -151,6 +150,11 @@ class _AddEditPageState extends State<AddEditPage> {
                       label: const Text('Assessment Type'),
                       dropdownMenuEntries: buildDropdownMenuItems(),
                       width: constraints.maxWidth,
+                      onSelected: (AssessmentType? value) {
+                        setState(() {
+                          print(value!.code);
+                        });
+                      },
                     );
                   }
                 ),
