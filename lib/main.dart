@@ -105,11 +105,29 @@ class _AddEditPageState extends State<AddEditPage> {
     //   assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label, leadingIcon: Icon(assessmentType.icon)));
     // }
 
-    final List<DropdownMenuEntry<AssessmentType>> assessmentTypesForDropdown = <DropdownMenuEntry<AssessmentType>>[];
-    for (int i=0; i<assessmentTypes.length; i++){
-      assessmentTypesForDropdown.add(DropdownMenuEntry<AssessmentType>(value: assessmentTypes[i]!, label: assessmentTypes[i]!.name));
+    // final List<DropdownMenuEntry<AssessmentType>> assessmentTypesForDropdown = <DropdownMenuEntry<AssessmentType>>[];
+    // // for (int i=0; i<assessmentTypes.length; i++){
+    // //   assessmentTypesForDropdown.add(DropdownMenuEntry<AssessmentType>(value: assessmentTypes[i], label: assessmentTypes[i]!.name));
+    // // }
+    // for(String current in assessmentTypes.keys){
+    //   assessmentTypesForDropdown.add(DropdownMenuEntry<AssessmentType>(value: current, label: assessmentTypes[current]!.name));
+    // }
+
+    List<DropdownMenuEntry<AssessmentType>> buildDropdownMenuItems() {
+      List<DropdownMenuEntry<AssessmentType>> menuItems = [];
+      assessmentTypes.forEach((key, value) {
+        menuItems.add(
+          DropdownMenuEntry<AssessmentType>(
+            value: value,
+            label: value.name,
+            leadingIcon: Icon(value.icon)
+          ),
+        );
+      });
+      return menuItems;
     }
-    
+
+
     return Scaffold(
       appBar: AppBar(
         
@@ -131,13 +149,13 @@ class _AddEditPageState extends State<AddEditPage> {
                       enableFilter: true,
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Assessment Type'),
-                      dropdownMenuEntries: assessmentTypesForDropdown,
+                      dropdownMenuEntries: buildDropdownMenuItems(),
                       width: constraints.maxWidth,
                     );
                   }
                 ),
               ),
-              Padding(
+              Padding(  
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextFormField(
                   controller: assessmentNameController,

@@ -31,7 +31,7 @@ class AssessmentType{
   AssessmentType(this.name, this.icon);
 }
 
-Map<String, AssessmentType> assessmentTypes = {
+final Map<String, AssessmentType> assessmentTypes = {
   "exam": AssessmentType("Exam", Icons.edit),
   "cbt": AssessmentType("Computer Based Test", Icons.computer)
 };
