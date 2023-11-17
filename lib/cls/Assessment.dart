@@ -9,17 +9,29 @@ class Assessment{
   double markPercentageOfAssessment;
   // Icon assessmentIcon;
   bool taken;
-  AssessmentTypes assessmentType;
+  String assessmentType;
 
 
   Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentType,  this.taken);
 }
 
-enum AssessmentTypes {
-  exam('Exam', Icons.edit),
-  cbt('Computer Based Test', Icons.computer);
+// enum AssessmentTypes {
+//   exam('Exam', Icons.edit),
+//   cbt('Computer Based Test', Icons.computer);
   
-  const AssessmentTypes(this.label, this.icon);
-  final String label;
-  final IconData icon;
+//   const AssessmentTypes(this.label, this.icon);
+//   final String label;
+//   final IconData icon;
+// }
+
+class AssessmentType{
+  String name;
+  IconData icon;
+
+  AssessmentType(this.name, this.icon);
 }
+
+Map<String, AssessmentType> assessmentTypes = {
+  "exam": AssessmentType("Exam", Icons.edit),
+  "cbt": AssessmentType("Computer Based Test", Icons.computer)
+};

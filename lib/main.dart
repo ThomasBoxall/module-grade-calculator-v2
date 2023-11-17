@@ -46,9 +46,9 @@ int currentModule = -1; //this is used to set which module in myModules should b
 void main() {
   // lines below add assessments for testing
   myModules.add(Module(true));
-  myModules[0].addAssessment(Assessment("Exam", 20, 80, AssessmentTypes.cbt, true));
-  myModules[0].addAssessment(Assessment("Exam", 21, 81, AssessmentTypes.cbt, true));
-  myModules[0].addAssessment(Assessment("Exam", 22, 82, AssessmentTypes.cbt, true));
+  myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
+  myModules[0].addAssessment(Assessment("Exam", 21, 81, "cbt", true));
+  myModules[0].addAssessment(Assessment("Exam", 22, 82, "cbt", true));
   print("myModules length ${myModules.length}");
   print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
@@ -100,9 +100,14 @@ class _AddEditPageState extends State<AddEditPage> {
   Widget build(BuildContext context) {
 
     // build the list used to populate 
-    final List<DropdownMenuEntry<AssessmentTypes>> assessmentTypes = <DropdownMenuEntry<AssessmentTypes>>[];
-    for(final AssessmentTypes assessmentType in AssessmentTypes.values){
-      assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label, leadingIcon: Icon(assessmentType.icon)));
+    // final List<DropdownMenuEntry<AssessmentTypes>> assessmentTypes = <DropdownMenuEntry<AssessmentTypes>>[];
+    // for(final AssessmentTypes assessmentType in AssessmentTypes.values){
+    //   assessmentTypes.add(DropdownMenuEntry<AssessmentTypes>(value:assessmentType, label: assessmentType.label, leadingIcon: Icon(assessmentType.icon)));
+    // }
+
+    final List<DropdownMenuEntry<AssessmentType>> assessmentTypesForDropdown = <DropdownMenuEntry<AssessmentType>>[];
+    for (int i=0; i<assessmentTypes.length; i++){
+      assessmentTypesForDropdown.add(DropdownMenuEntry<AssessmentType>(value: assessmentTypes[i]!, label: assessmentTypes[i]!.name));
     }
     
     return Scaffold(
@@ -121,12 +126,12 @@ class _AddEditPageState extends State<AddEditPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints){
-                    return DropdownMenu<AssessmentTypes>(
+                    return DropdownMenu<AssessmentType>(
                       controller: assessmentIconController,
                       enableFilter: true,
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Assessment Type'),
-                      dropdownMenuEntries: assessmentTypes,
+                      dropdownMenuEntries: assessmentTypesForDropdown,
                       width: constraints.maxWidth,
                     );
                   }
