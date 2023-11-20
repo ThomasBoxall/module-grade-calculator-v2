@@ -6,6 +6,7 @@ class Module{
   String? moduleName;
   String? moduleCode;
   int? credits;
+  String? level;
   bool isQuickEdit;
   List<Assessment> assessments = [];
 

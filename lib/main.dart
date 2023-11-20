@@ -81,7 +81,8 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModule(title: 'Load Module'),
         "/about":(context) => const About(title: 'About')
-        }
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -379,6 +380,12 @@ class _EditModuleState extends State<EditModule> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const EditModuleInfo())).then((value) => refreshRoute());},
+            icon: const Icon(Icons.edit_attributes)
+          )
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -536,6 +543,57 @@ class _EditModuleState extends State<EditModule> {
     );
   }
 }
+
+class EditModuleInfo extends StatefulWidget {
+  const EditModuleInfo({super.key});
+
+  @override
+  State<EditModuleInfo> createState() => _EditModuleInfoState();
+}
+
+class _EditModuleInfoState extends State<EditModuleInfo> {
+
+  final _editModueFormKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      appBar: AppBar(
+        
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("Edit Module Info"),
+      ),
+      body:  Center(
+        child: Form (
+          key: _editModueFormKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'EditModuleInfo',
+              )
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+
+
+// Center(
+//         child: Form(
+//           key: _addEditFormKey,
+//           autovalidateMode: AutovalidateMode.onUserInteraction,
+//           child: Column(
+//             children: <Widget>[
+//               Padding(
+//                 padding: const Ed
+
+
+
 
 class LoadModule extends StatefulWidget {
   const LoadModule({super.key, required this.title});
