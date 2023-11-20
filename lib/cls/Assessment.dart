@@ -13,6 +13,14 @@ class Assessment{
 
 
   Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentType,  this.taken);
+
+  void updateAssessment(assessmentName, assessmentPercentageOfModule, markPercentageOfModule, assessmentType, taken){
+    this.assessmentName = assessmentName;
+    this.assessmentPercentageOfModule = assessmentPercentageOfModule;
+    this.markPercentageOfAssessment = markPercentageOfAssessment;
+    this.assessmentType = assessmentType;
+    this.taken = taken;
+  }
 }
 
 // enum AssessmentTypes {
@@ -37,3 +45,7 @@ final Map<String, AssessmentType> assessmentTypes = {
   "exm": AssessmentType("Exam", Icons.edit, "exm"),
   "cbt": AssessmentType("Computer Based Test", Icons.computer, "cbt")
 };
+
+String getAssessmentTypeName(String shortCode){
+  return assessmentTypes[shortCode]!.name;
+}

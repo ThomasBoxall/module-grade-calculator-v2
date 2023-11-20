@@ -105,6 +105,10 @@ class _AddEditPageState extends State<AddEditPage> {
 
   int totalModuleAssessmentsPercentage = myModules[currentModule].getAssessmentTotalAssValue();
 
+  void updateAssessmentTypeCode(String code){
+    assessmentTypeCode = code;
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -137,11 +141,16 @@ class _AddEditPageState extends State<AddEditPage> {
     }
 
     if(widget.isEdit){
+      // set the totalModAssPerc to use total - val for current ass
+      totalModuleAssessmentsPercentage - myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule;
+    }
+
+    if(widget.isEdit){
       // we have to set some of the values now
       assessmentNameController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentName;
       assessmentPercentageOfModuleController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule.toString();
       markPercentageOfAssessmentController.text = myModules[currentModule].assessments[assessmentToEdit].markPercentageOfAssessment.toString();
-      assessmentIconController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentType;
+      assessmentIconController.text = getAssessmentTypeName(myModules[currentModule].assessments[assessmentToEdit].assessmentType);
       assessmentTakenCheckboxValue = myModules[currentModule].assessments[assessmentToEdit].taken;
     }
 
@@ -169,10 +178,12 @@ class _AddEditPageState extends State<AddEditPage> {
                       dropdownMenuEntries: buildDropdownMenuItems(),
                       width: constraints.maxWidth,
                       onSelected: (AssessmentType? value) {
-                        setState(() {
-                          print(value!.code);
-                          assessmentTypeCode = value.code;
-                        });
+                        // setState(() {
+                        //   print(value!.code);
+                        //   assessmentTypeCode = value.code;
+                        // });
+                        print(value!.code);
+                        updateAssessmentTypeCode(value!.code);
                       },
                     );
                   }
@@ -278,26 +289,44 @@ class _AddEditPageState extends State<AddEditPage> {
                               backgroundColor: Colors.black.withOpacity(0.7),
                             ),
                           );
-                          print("ASS TO ADD:");
-                          print("TYPE: ${assessmentTypeCode}");
-                          print("NAME: ${assessmentNameController.text}");
-                          print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
-                          print("TAKEN: ${assessmentTakenCheckboxValue}");
-                          print("% OF ASS: ${markPercentageOfAssessmentController.text}");
-                          print("Total ASS%: ${myModules[currentModule].getAssessmentTotalAssValue()}");
-                          if(assessmentTakenCheckboxValue){
-                            // assessment has been taken and therefore can be shoved in as usual.
-                            myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
-                          } else {
-                            //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
-                            myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
-                          }
-                          
-                          print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
-                          Future.delayed(const Duration(milliseconds: 1505), (){
-                            Navigator.pop(context);
-                          });
+                          if(!widget.isEdit){
+                            print("ASS TO ADD:");
+                            print("TYPE: ${assessmentTypeCode}");
+                            print("NAME: ${assessmentNameController.text}");
+                            print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
+                            print("TAKEN: ${assessmentTakenCheckboxValue}");
+                            print("% OF ASS: ${markPercentageOfAssessmentController.text}");
+                            print("Total ASS%: ${totalModuleAssessmentsPercentage}");
+                            if(assessmentTakenCheckboxValue){
+                              // assessment has been taken and therefore can be shoved in as usual.
+                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
+                            } else {
+                              //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
+                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
+                            }
+                            
+                            print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
 
+                            } else{
+                              print("ASS TO EDIT:");
+                              print("TYPE: ${assessmentTypeCode}");
+                              print("NAME: ${assessmentNameController.text}");
+                              print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
+                              print("TAKEN: ${assessmentTakenCheckboxValue}");
+                              print("% OF ASS: ${markPercentageOfAssessmentController.text}");
+                              print("Total ASS%: ${totalModuleAssessmentsPercentage}");
+                              if(assessmentTakenCheckboxValue){
+                                // assessment has been taken and therefore can be shoved in as usual.
+                                myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue);
+                              } else {
+                                //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
+                                myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue);
+                              }
+                            }
+                            
+                            Future.delayed(const Duration(milliseconds: 1505), (){
+                              Navigator.pop(context);
+                          });
                         }
                       },
                       child: const Text("Save")
@@ -359,7 +388,7 @@ class _EditModuleState extends State<EditModule> {
               child: Card(
                 child: Center(
                   child: Text(
-                    "${myModules[currentModule].getAssessmentTotalAssValue().toString()}% of xx%", 
+                    "xx% of ${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
                     style: TextStyle(
                       fontSize: 25,
                     )
