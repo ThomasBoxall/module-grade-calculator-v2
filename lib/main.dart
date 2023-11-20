@@ -328,18 +328,21 @@ class _EditModuleState extends State<EditModule> {
           //       child: Text("Test"),
           //     )
           //   ),
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: 75,
-              minWidth: 300,
-            ),
-            child: Card(
-              child: Center(
-                child: Text(
-                  "${myModules[currentModule].getAssessmentTotalAssValue().toString()}% of xx%", 
-                  style: TextStyle(
-                    fontSize: 25,
-                  )
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minHeight: 75,
+                minWidth: 300,
+              ),
+              child: Card(
+                child: Center(
+                  child: Text(
+                    "${myModules[currentModule].getAssessmentTotalAssValue().toString()}% of xx%", 
+                    style: TextStyle(
+                      fontSize: 25,
+                    )
+                  ),
                 ),
               ),
             ),
