@@ -33,6 +33,7 @@ class AssessmentType{
 }
 
 final Map<String, AssessmentType> assessmentTypes = {
+  "ass": AssessmentType("generic Assessment", Icons.question_mark, "ass"),
   "exm": AssessmentType("Exam", Icons.edit, "exm"),
   "cbt": AssessmentType("Computer Based Test", Icons.computer, "cbt")
 };

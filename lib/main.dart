@@ -47,8 +47,8 @@ void main() {
   // lines below add assessments for testing
   myModules.add(Module(true));
   myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
-  myModules[0].addAssessment(Assessment("Exam", 21, 81, "cbt", true));
-  myModules[0].addAssessment(Assessment("Exam", 22, 82, "cbt", true));
+  myModules[0].addAssessment(Assessment("Exam", 20, 81, "cbt", true));
+  myModules[0].addAssessment(Assessment("Exam", 20, 82, "cbt", true));
   print("myModules length ${myModules.length}");
   print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
@@ -97,6 +97,8 @@ class _AddEditPageState extends State<AddEditPage> {
   final _addEditFormKey = GlobalKey<FormState>();
 
   String assessmentTypeCode = "ass";
+
+  int totalModuleAssessmentsPercentage = myModules[currentModule].getAssessmentTotalAssValue();
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +189,8 @@ class _AddEditPageState extends State<AddEditPage> {
                       return 'Please enter a whole number';
                     } else if(int.parse(value) > 100 || int.parse(value) < 0){
                       return 'Please enter a value between 0 and 100';
+                    } else if(totalModuleAssessmentsPercentage + int.parse(value) > 100){
+                      return "Please enter a value which total your overall assessment percentage to less than 100%";
                     }
                     return null;
                   },
@@ -266,7 +270,9 @@ class _AddEditPageState extends State<AddEditPage> {
                           print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
                           print("TAKEN: ${assessmentTakenCheckboxValue}");
                           print("% OF ASS: ${markPercentageOfAssessmentController.text}");
+                          print("Total ASS%: ${myModules[currentModule].getAssessmentTotalAssValue()}");
                           myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
+                          print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
                           Future.delayed(const Duration(milliseconds: 1505), (){
                             Navigator.pop(context);
                           });
@@ -312,7 +318,32 @@ class _EditModuleState extends State<EditModule> {
         title: Text(widget.title),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          // FractionallySizedBox(
+          //     widthFactor: 0.9,
+          //     heightFactor: 0.2,
+          //     alignment: FractionalOffset.center,
+          //     child: Card(
+          //       child: Text("Test"),
+          //     )
+          //   ),
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 75,
+              minWidth: 300,
+            ),
+            child: Card(
+              child: Center(
+                child: Text(
+                  "${myModules[currentModule].getAssessmentTotalAssValue().toString()}% of xx%", 
+                  style: TextStyle(
+                    fontSize: 25,
+                  )
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: myModules[currentModule].getNoOfAssessments(),
