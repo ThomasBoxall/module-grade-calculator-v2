@@ -264,14 +264,21 @@ class _AddEditPageState extends State<AddEditPage> {
                               backgroundColor: Colors.black.withOpacity(0.7),
                             ),
                           );
-                          print("Added assessment:");
+                          print("ASS TO ADD:");
                           print("TYPE: ${assessmentTypeCode}");
                           print("NAME: ${assessmentNameController.text}");
                           print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
                           print("TAKEN: ${assessmentTakenCheckboxValue}");
                           print("% OF ASS: ${markPercentageOfAssessmentController.text}");
                           print("Total ASS%: ${myModules[currentModule].getAssessmentTotalAssValue()}");
-                          myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
+                          if(assessmentTakenCheckboxValue){
+                            // assessment has been taken and therefore can be shoved in as usual.
+                            myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
+                          } else {
+                            //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
+                            myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
+                          }
+                          
                           print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
                           Future.delayed(const Duration(milliseconds: 1505), (){
                             Navigator.pop(context);

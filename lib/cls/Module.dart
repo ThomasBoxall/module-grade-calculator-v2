@@ -25,7 +25,14 @@ class Module{
   }
 
   String getAssessmentName(int index) => assessments[index].assessmentName;
-  String getAssessmentDisplaySubtext(int index) => "Score: ${assessments[index].markPercentageOfAssessment}% of ${assessments[index].assessmentPercentageOfModule}%";  
+  // String getAssessmentDisplaySubtext(int index) => "Score: ${assessments[index].markPercentageOfAssessment}% of ${assessments[index].assessmentPercentageOfModule}%";
+  String getAssessmentDisplaySubtext(int index){
+    if(assessments[index].taken){
+      return "Score: ${assessments[index].markPercentageOfAssessment}% of ${assessments[index].assessmentPercentageOfModule}%";
+    } else{
+      return "Not yet taken. Assessment is ${assessments[index].assessmentPercentageOfModule}% of module";
+    }
+  }
   // IconData getAssessmentIcon(int index) => assessments[index].assessmentType.icon;
   IconData getAssessmentIcon(int index) => assessmentTypes[assessments[index].assessmentType]!.icon;
 
