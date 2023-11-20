@@ -96,6 +96,8 @@ class _AddEditPageState extends State<AddEditPage> {
   
   final _addEditFormKey = GlobalKey<FormState>();
 
+  String assessmentTypeCode = "ass";
+
   @override
   Widget build(BuildContext context) {
 
@@ -153,6 +155,7 @@ class _AddEditPageState extends State<AddEditPage> {
                       onSelected: (AssessmentType? value) {
                         setState(() {
                           print(value!.code);
+                          assessmentTypeCode = value.code;
                         });
                       },
                     );
@@ -258,11 +261,12 @@ class _AddEditPageState extends State<AddEditPage> {
                             ),
                           );
                           print("Added assessment:");
-                          print("TYPE: ${assessmentIconController}");
+                          print("TYPE: ${assessmentTypeCode}");
                           print("NAME: ${assessmentNameController.text}");
                           print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
                           print("TAKEN: ${assessmentTakenCheckboxValue}");
                           print("% OF ASS: ${markPercentageOfAssessmentController.text}");
+                          myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
                           Future.delayed(const Duration(milliseconds: 1505), (){
                             Navigator.pop(context);
                           });
@@ -358,7 +362,7 @@ class _EditModuleState extends State<EditModule> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage()));},
+        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage())).then((value) => refreshRoute());},
         tooltip: 'Add new assessment',
         label: const Text("Add"),
         icon: const Icon(Icons.add),
