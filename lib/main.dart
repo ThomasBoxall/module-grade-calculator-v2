@@ -42,6 +42,7 @@ bool isDouble(String? s){
 
 List <Module> myModules = [];
 int currentModule = -1; //this is used to set which module in myModules should be displayed on EdiModule. -1 means quick calculator
+int assessmentToEdit = -1; // used to set which assessment should be edited when editMode in AddEditPage is true. Set back to -1 when not in use.
 
 void main() {
   // lines below add assessments for testing
@@ -80,7 +81,11 @@ class MyApp extends StatelessWidget {
 
 
 class AddEditPage extends StatefulWidget {
-  const AddEditPage({super.key});
+  const AddEditPage({super.key, required this.isEdit});
+
+
+  final bool isEdit;
+
 
   @override
   State<AddEditPage> createState() => _AddEditPageState();
@@ -131,11 +136,20 @@ class _AddEditPageState extends State<AddEditPage> {
       return menuItems;
     }
 
+    if(widget.isEdit){
+      // we have to set some of the values now
+      assessmentNameController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentName;
+      assessmentPercentageOfModuleController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule.toString();
+      markPercentageOfAssessmentController.text = myModules[currentModule].assessments[assessmentToEdit].markPercentageOfAssessment.toString();
+      assessmentIconController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentType;
+      assessmentTakenCheckboxValue = myModules[currentModule].assessments[assessmentToEdit].taken;
+    }
+
     return Scaffold(
       appBar: AppBar(
         
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Add Edit Thing DO SOMEBETTERTITLINGHERE SOMETIME"),
+        title: Text(widget.isEdit? "Edit Assessment" : "Add Assessment"),
       ),
       body: Center(
         child: Form(
@@ -388,7 +402,10 @@ class _EditModuleState extends State<EditModule> {
                     ],
                     onSelected:(value){
                       if(value == 1){
+                        // edit
                         print("$index - 1");
+                        assessmentToEdit = index;
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: true))).then((value) => refreshRoute());
                       } else if (value == 2){
                         //delete
                         myModules[currentModule].deleteAssessment(index);
@@ -403,7 +420,7 @@ class _EditModuleState extends State<EditModule> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage())).then((value) => refreshRoute());},
+        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: false))).then((value) => refreshRoute());},
         tooltip: 'Add new assessment',
         label: const Text("Add"),
         icon: const Icon(Icons.add),
