@@ -43,6 +43,13 @@ bool isDouble(String? s){
 List <Module> myModules = [];
 int currentModule = -1; //this is used to set which module in myModules should be displayed on EdiModule. -1 means quick calculator
 int assessmentToEdit = -1; // used to set which assessment should be edited when editMode in AddEditPage is true. Set back to -1 when not in use.
+bool assessmentFirstSetState = true;
+
+void clearAssessmentEditOptions(){
+  /// Resets variables used when editing assessments after they're used to sort whacky behaviour out.
+  assessmentToEdit = -1;
+  assessmentFirstSetState = true;
+}
 
 void main() {
   // lines below add assessments for testing
@@ -145,13 +152,15 @@ class _AddEditPageState extends State<AddEditPage> {
       totalModuleAssessmentsPercentage - myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule;
     }
 
-    if(widget.isEdit){
+    if(widget.isEdit && assessmentFirstSetState){
       // we have to set some of the values now
       assessmentNameController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentName;
       assessmentPercentageOfModuleController.text = myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule.toString();
       markPercentageOfAssessmentController.text = myModules[currentModule].assessments[assessmentToEdit].markPercentageOfAssessment.toString();
       assessmentIconController.text = getAssessmentTypeName(myModules[currentModule].assessments[assessmentToEdit].assessmentType);
       assessmentTakenCheckboxValue = myModules[currentModule].assessments[assessmentToEdit].taken;
+      assessmentFirstSetState = false;
+      print("setting all the things");
     }
 
     return Scaffold(
@@ -290,6 +299,7 @@ class _AddEditPageState extends State<AddEditPage> {
                             ),
                           );
                           if(!widget.isEdit){
+                            // Adding assessment
                             print("ASS TO ADD:");
                             print("TYPE: ${assessmentTypeCode}");
                             print("NAME: ${assessmentNameController.text}");
@@ -308,6 +318,7 @@ class _AddEditPageState extends State<AddEditPage> {
                             print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
 
                             } else{
+                              // Saving edited assessment
                               print("ASS TO EDIT:");
                               print("TYPE: ${assessmentTypeCode}");
                               print("NAME: ${assessmentNameController.text}");
@@ -325,6 +336,7 @@ class _AddEditPageState extends State<AddEditPage> {
                             }
                             
                             Future.delayed(const Duration(milliseconds: 1505), (){
+                              clearAssessmentEditOptions();
                               Navigator.pop(context);
                           });
                         }
