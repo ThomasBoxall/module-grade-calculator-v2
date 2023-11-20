@@ -274,7 +274,7 @@ class _AddEditPageState extends State<AddEditPage> {
                   spacing: 12,
                   children: <Widget>[
                     OutlinedButton(
-                      onPressed: () { Navigator.pop(context); },
+                      onPressed: () { clearAssessmentEditOptions(); Navigator.pop(context); },
                       child: const Text("Back")
                     ),
                     FilledButton(
@@ -366,6 +366,7 @@ class EditModule extends StatefulWidget {
 class _EditModuleState extends State<EditModule> {
 
   void refreshRoute(){
+    clearAssessmentEditOptions();
     setState(() {
       
     });
@@ -390,24 +391,81 @@ class _EditModuleState extends State<EditModule> {
           //       child: Text("Test"),
           //     )
           //   ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                minHeight: 75,
-                minWidth: 300,
-              ),
-              child: Card(
-                child: Center(
-                  child: Text(
-                    "xx% of ${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
-                    style: TextStyle(
-                      fontSize: 25,
-                    )
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          //   child: ConstrainedBox(
+          //     constraints: const BoxConstraints(
+          //       minHeight: 75,
+          //       minWidth: 300,
+          //     ),
+          //     child: Card(
+          //       child: Center(
+          //         child: Text(
+          //           "${myModules[currentModule].getTotalMarkPercentageOfTakenAss().toString()}% of ${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
+          //           style: Theme.of(context).textTheme.headlineMedium
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 150,
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "My Marks"
+                        ),
+                        Center(
+                          child: Text(
+                            "${myModules[currentModule].getTotalMarkPercentageOfTakenAss().toString()}%", 
+                            style: Theme.of(context).textTheme.headlineMedium
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 150,
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                        children: [
+                          const Text(
+                            "Assessments Taken"
+                          ),
+                          Center(
+                            child: Text(
+                              "${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
+                              style: Theme.of(context).textTheme.headlineMedium
+                            ),
+                          ),
+                        ],
+                      ),
+                  ),
+                ),
+              ),
+            ),
+            ]
           ),
           Expanded(
             child: ListView.builder(
@@ -418,8 +476,8 @@ class _EditModuleState extends State<EditModule> {
                   subtitle: Text(myModules[currentModule].getAssessmentDisplaySubtext(index)),
                   leading: Icon(myModules[currentModule].getAssessmentIcon(index)),
                   onTap: () {
-                    // OPEN ADD EDIT ROUTE HERE AND EDIT THE ASSESSMENT
-                  },
+                    assessmentToEdit = index;
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: true))).then((value) => refreshRoute());                  },
                   trailing: PopupMenuButton<int>(
                     itemBuilder: (context) => [
                       const PopupMenuItem(
