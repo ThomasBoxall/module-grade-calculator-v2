@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const EditModule(title: 'Quick Calculator'),
+      home: const EditModule(),
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModule(title: 'Load Module'),
         "/about":(context) => const About(title: 'About')
@@ -182,12 +182,12 @@ class _AddEditPageState extends State<AddEditPage> {
                   builder: (BuildContext context, BoxConstraints constraints){
                     return DropdownMenu<AssessmentType>(
                       controller: assessmentIconController,
-                      enableFilter: true,
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Assessment Type'),
                       dropdownMenuEntries: buildAssessmentTypeDropdownItems(),
                       width: constraints.maxWidth,
                       requestFocusOnTap: false,
+                      enableFilter: false,
                       onSelected: (AssessmentType? value) {
                         // setState(() {
                         //   print(value!.code);
@@ -357,9 +357,7 @@ class _AddEditPageState extends State<AddEditPage> {
 }
 
 class EditModule extends StatefulWidget {
-  const EditModule({super.key, required this.title});
-
-  final String title;
+  const EditModule({super.key});
 
   @override
   State<EditModule> createState() => _EditModuleState();
@@ -376,11 +374,13 @@ class _EditModuleState extends State<EditModule> {
 
   @override
   Widget build(BuildContext context) {
+
+    String editModulePageName = myModules[currentModule].isListedToUser ? "${myModules[currentModule].moduleName!} (${myModules[currentModule].moduleCode!})" : "Quick Calculator";
     
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(editModulePageName),
         actions: [
           IconButton(
             onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const EditModuleInfo())).then((value) => refreshRoute());},
@@ -577,11 +577,24 @@ class _EditModuleInfoState extends State<EditModuleInfo> {
       return menuItems;
     }
 
-    String moduleSaveStateWarning = myModules[currentModule].isListedToUser ? "Module saved" : "Module not saved";
+    String moduleSaveStateWarning = myModules[currentModule].isListedToUser ? "Module saved" : "Module not saved"; // make this look prettier somehow? snackbar time???
+
+    // if module options are not null then we want to render them
+    if(myModules[currentModule].moduleName != null){
+      moduleNameController.text = myModules[currentModule].moduleName!;
+    }
+    if(myModules[currentModule].moduleCode != null){
+      moduleCodeController.text = myModules[currentModule].moduleCode!;
+    }
+    if(myModules[currentModule].credits != null){
+      moduleCreditController.text = myModules[currentModule].credits!.toString();
+    }
+    if(myModules[currentModule].level != null){
+      moduleLevelController.text = myModules[currentModule].level!;
+    }
     
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Edit Module Info"),
       ),
@@ -645,12 +658,12 @@ class _EditModuleInfoState extends State<EditModuleInfo> {
                   builder: (BuildContext context, BoxConstraints constraints){
                     return DropdownMenu<String>(
                       controller: moduleLevelController,
-                      enableFilter: true,
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Module Level'),
                       dropdownMenuEntries: buildModuleLevelDropdownItems(),
                       width: constraints.maxWidth,
                       requestFocusOnTap: false,
+                      enableFilter: false,
                       onSelected: (String? value) {
                         // setState(() {
                         //   print(value!.code);
@@ -694,6 +707,8 @@ class _EditModuleInfoState extends State<EditModuleInfo> {
                             ),
                           );
                           
+                          myModules[currentModule].updateInformation(moduleNameController.text, moduleCodeController.text, int.parse(moduleCreditController.text), moduleLevelController.text, true);
+                          print(myModules[currentModule].moduleName);
                             
                             Future.delayed(const Duration(milliseconds: 1505), (){
                               

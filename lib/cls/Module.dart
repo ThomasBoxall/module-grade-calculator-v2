@@ -14,6 +14,14 @@ class Module{
 
   Module(this.isQuickEdit, this.isListedToUser);
 
+  void updateInformation(modName, modCode, cred, lev, listToUsr){
+    this.moduleName = modName;
+    this.moduleCode = modCode;
+    this.credits = cred;
+    this.level = lev;
+    this.isListedToUser = listToUsr;
+  }
+
   void addAssessment(Assessment assToAdd){
     assessments.add(assToAdd);
   }
