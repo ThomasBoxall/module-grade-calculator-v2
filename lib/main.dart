@@ -4,11 +4,12 @@ import 'cls/Assessment.dart';
 import 'cls/Module.dart';
 
 
-int currentPageIndex = 1;
+int currentPageIndex = 2;
 
 const navigationDestinations = [
-    NavigationDestination(icon: Icon(Icons.folder_open_outlined), selectedIcon: Icon(Icons.folder_open), label: 'Load Module'),
-    NavigationDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: 'Edit Module'),
+    NavigationDestination(icon: Icon(Icons.folder_open_outlined), selectedIcon: Icon(Icons.folder_open), label: 'Templates'),
+    NavigationDestination(icon: Icon(Icons.view_list_outlined), selectedIcon: Icon(Icons.view_list), label: 'My'),
+    NavigationDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: 'Edit'),
     NavigationDestination(icon: Icon(Icons.info_outline), selectedIcon: Icon(Icons.info), label: 'About'),
   ];
 
@@ -17,9 +18,11 @@ String getNewPageIndexStr(int newPageIndexInt){
   switch(newPageIndexInt){
     case 0:
       return "/load-module";
-    case 2:
-      return "/about";
     case 1:
+      return "/my-modules";
+    case 3:
+      return "/about";
+    case 2:
     default:
       return "/";
     
@@ -53,7 +56,8 @@ void clearAssessmentEditOptions(){
 
 void main() {
   // lines below add assessments for testing
-  myModules.add(Module(true, false));
+  // myModules.add(Module(true, true));
+  myModules.add(Module.setAllValues("Test module", "MXXXX", 40, "Level 4", false, true));
   myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 81, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 82, "cbt", true));
@@ -80,7 +84,8 @@ class MyApp extends StatelessWidget {
       home: const EditModule(),
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModule(title: 'Load Module'),
-        "/about":(context) => const About(title: 'About')
+        "/about":(context) => const About(title: 'About'),
+        "/my-modules":(context) => const MyModules()
       },
       debugShowCheckedModeBanner: false,
     );
@@ -772,6 +777,58 @@ class _LoadModuleState extends State<LoadModule> {
             )
           ],
         ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        destinations: navigationDestinations,
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          if(index != currentPageIndex){
+            Navigator.pushReplacementNamed(context, getNewPageIndexStr(index));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class MyModules extends StatefulWidget {
+  const MyModules({super.key});
+
+  @override
+  State<MyModules> createState() => _MyModulesState();
+}
+
+class _MyModulesState extends State<MyModules> {
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      appBar: AppBar(
+        
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("My Modules"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              itemCount: myModules.length,
+              itemBuilder: (BuildContext context, int index){
+                if(myModules[index].isListedToUser){
+                  return ListTile(
+                    title: Text(myModules[index].moduleName!),
+                    subtitle: Text("(${myModules[index].moduleCode!})"),
+                    onTap: (){
+                      // eventually do something more here,
+                      print("tapped $index module");
+                    },
+                  );
+                }
+              },  
+            ),
+          )
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         destinations: navigationDestinations,

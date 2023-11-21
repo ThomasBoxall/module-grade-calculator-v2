@@ -14,6 +14,8 @@ class Module{
 
   Module(this.isQuickEdit, this.isListedToUser);
 
+  Module.setAllValues(this.moduleName, this.moduleCode, this.credits, this.level, this.isQuickEdit, this.isListedToUser);
+
   void updateInformation(modName, modCode, cred, lev, listToUsr){
     this.moduleName = modName;
     this.moduleCode = modCode;
