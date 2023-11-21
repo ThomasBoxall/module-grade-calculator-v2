@@ -64,8 +64,6 @@ void main() {
   print("myModules length ${myModules.length}");
   print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
-  currentModule = 0;
-
   runApp(const MyApp());
 }
 
@@ -75,6 +73,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // get currentModule value and if it's -1 this means we need to add a module to the module array so app can open on quick calculator. We have to setup a quick calculator module as this is what the app relies on to open.
+    if(currentModule == -1){
+      myModules.add(Module(true, false));
+      currentModule = myModules.length-1;
+    }
+
+
     return MaterialApp(
       title: 'Module Grade Calculator',
       theme: ThemeData(
@@ -376,6 +381,8 @@ class _EditModuleState extends State<EditModule> {
       
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
