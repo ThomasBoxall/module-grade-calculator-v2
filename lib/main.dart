@@ -829,6 +829,9 @@ class _MyModulesState extends State<MyModules> {
                     onTap: (){
                       // eventually do something more here,
                       print("tapped $index module");
+                      currentModule = index;
+                      currentPageIndex = 2;
+                      Navigator.pushReplacementNamed(context, "/");
                     },
                   );
                 }
