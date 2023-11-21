@@ -8,10 +8,11 @@ class Module{
   int? credits;
   String? level;
   bool isQuickEdit;
+  bool isListedToUser;
   List<Assessment> assessments = [];
 
 
-  Module(this.isQuickEdit);
+  Module(this.isQuickEdit, this.isListedToUser);
 
   void addAssessment(Assessment assToAdd){
     assessments.add(assToAdd);
@@ -63,3 +64,5 @@ class Module{
 
 
 }
+
+List<String> moduleLevels = ["Level 4", "Level 5", "Level 6", "Level 7"];

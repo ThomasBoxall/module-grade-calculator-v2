@@ -53,7 +53,7 @@ void clearAssessmentEditOptions(){
 
 void main() {
   // lines below add assessments for testing
-  myModules.add(Module(true));
+  myModules.add(Module(true, false));
   myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 81, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 82, "cbt", true));
@@ -134,7 +134,7 @@ class _AddEditPageState extends State<AddEditPage> {
     //   assessmentTypesForDropdown.add(DropdownMenuEntry<AssessmentType>(value: current, label: assessmentTypes[current]!.name));
     // }
 
-    List<DropdownMenuEntry<AssessmentType>> buildDropdownMenuItems() {
+    List<DropdownMenuEntry<AssessmentType>> buildAssessmentTypeDropdownItems() {
       List<DropdownMenuEntry<AssessmentType>> menuItems = [];
       assessmentTypes.forEach((key, value) {
         menuItems.add(
@@ -185,8 +185,9 @@ class _AddEditPageState extends State<AddEditPage> {
                       enableFilter: true,
                       leadingIcon: const Icon(Icons.search),
                       label: const Text('Assessment Type'),
-                      dropdownMenuEntries: buildDropdownMenuItems(),
+                      dropdownMenuEntries: buildAssessmentTypeDropdownItems(),
                       width: constraints.maxWidth,
+                      requestFocusOnTap: false,
                       onSelected: (AssessmentType? value) {
                         // setState(() {
                         //   print(value!.code);
@@ -553,10 +554,30 @@ class EditModuleInfo extends StatefulWidget {
 
 class _EditModuleInfoState extends State<EditModuleInfo> {
 
+  late TextEditingController moduleNameController = TextEditingController();
+  late TextEditingController moduleCodeController = TextEditingController();
+  late TextEditingController moduleCreditController = TextEditingController();
+  late TextEditingController moduleLevelController = TextEditingController();
+
   final _editModueFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+
+    List<DropdownMenuEntry<String>> buildModuleLevelDropdownItems(){
+      List<DropdownMenuEntry<String>> menuItems = [];
+      moduleLevels.forEach((element) {
+        menuItems.add(
+          DropdownMenuEntry<String>(
+            value: element,
+            label: element
+          ),
+        );
+      });
+      return menuItems;
+    }
+
+    String moduleSaveStateWarning = myModules[currentModule].isListedToUser ? "Module saved" : "Module not saved";
     
     return Scaffold(
       appBar: AppBar(
@@ -569,11 +590,122 @@ class _EditModuleInfoState extends State<EditModuleInfo> {
           key: _editModueFormKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            
             children: <Widget>[
               Text(
-                'EditModuleInfo',
-              )
+                moduleSaveStateWarning
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: moduleNameController,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: "Module Name"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    }
+                    return null;
+                  },
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: moduleCodeController,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: "Module Code"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    }
+                    return null;
+                  },
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: moduleCreditController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), labelText: "Credits"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a value';
+                    } else if(!isInt(value)){
+                      return "Please enter a whole number";
+                    } else if (int.parse(value) % 20 != 0 || int.parse(value) == 0){
+                      return "Module credits must be a multiple of 20";
+                    }
+                    return null;
+                  },
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints){
+                    return DropdownMenu<String>(
+                      controller: moduleLevelController,
+                      enableFilter: true,
+                      leadingIcon: const Icon(Icons.search),
+                      label: const Text('Module Level'),
+                      dropdownMenuEntries: buildModuleLevelDropdownItems(),
+                      width: constraints.maxWidth,
+                      requestFocusOnTap: false,
+                      onSelected: (String? value) {
+                        // setState(() {
+                        //   print(value!.code);
+                        //   assessmentTypeCode = value.code;
+                        // });
+                        print(value!);
+                      },
+                    );
+                  }
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  spacing: 12,
+                  children: <Widget>[
+                    OutlinedButton(
+                      onPressed: () {Navigator.pop(context); },
+                      child: const Text("Back")
+                    ),
+                    FilledButton(
+                      onPressed: () { 
+                        if(_editModueFormKey.currentState!.validate()){
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const SizedBox(
+                                height: 40.0,
+                                child: Center(child: Text('Processing...')),
+                              ),
+                              duration: const Duration(milliseconds: 500),
+                              width: 100.0, // Width of the SnackBar.
+                              padding: const EdgeInsets.symmetric(
+                                horizontal:8.0, // Inner padding for SnackBar content.
+                              ),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              backgroundColor: Colors.black.withOpacity(0.7),
+                            ),
+                          );
+                          
+                            
+                            Future.delayed(const Duration(milliseconds: 1505), (){
+                              
+                              Navigator.pop(context);
+                          });
+                        } //end of validated code
+                      },
+                      child: const Text("Save")
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         )
