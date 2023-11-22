@@ -79,7 +79,8 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await initHiveDB();
-  Box box = await Hive.openBox("myModulesBox");
+  dbImportToArray();
+
 
   runApp(const MyApp());
 }
@@ -143,4 +144,10 @@ void dbTestPrint() async{
     print(Hive.box("myModulesBox").getAt(i));
   }
   print("END OF HIVE TEST PRINT");
+ print("START OF myModules TEST PRINT");
+  for(int i=0; i<myModules.length; i++){
+    print(myModules[i]);
+  }
+  print("END OF myModules TEST PRINT");
+   
 }

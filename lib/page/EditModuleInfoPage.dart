@@ -162,10 +162,13 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
                           
                           myModules[currentModule].updateInformation(moduleNameController.text, moduleCodeController.text, int.parse(moduleCreditController.text), moduleLevelController.text, true);
                           print(myModules[currentModule].isListedToUser);
+                          
+                          dbFlush();
+                          dbAdd();
+                          dbTestPrint();
+                          Future.delayed(const Duration(milliseconds: 1505), (){
                             
-                            Future.delayed(const Duration(milliseconds: 1505), (){
-                              
-                              Navigator.pop(context);
+                            Navigator.pop(context);
                           });
                         } //end of validated code
                       },
