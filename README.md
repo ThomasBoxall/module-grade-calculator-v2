@@ -1,2 +1,13 @@
 # module-grade-calculator-pappl
 Module Grade Calculator Project created for PAPPL L5 module at UoP
+
+## TODO
+* Add hive for myModules only
+* Add filter to MyModules display route to filter between quick added and template - if not something else needs to go between appBar and start of the ListTiles
+* Add template modules and how to make them work
+  * Including searching / filtering etc
+* Sort UI
+  * Theme - decide about use system theme vs set theme
+  * Use system colour or portsmouth purple
+  * Icons
+  * Check spacing and padding around things - make it consistent

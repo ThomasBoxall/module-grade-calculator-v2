@@ -1,0 +1,78 @@
+import '../main.dart';
+import 'package:flutter/material.dart';
+import '../cls/Module.dart';
+
+class MyModules extends StatefulWidget {
+  const MyModules({super.key});
+
+  @override
+  State<MyModules> createState() => _MyModulesState();
+}
+
+class _MyModulesState extends State<MyModules> {
+
+  List<Widget> getModulesToDisplay(){
+    List<Widget> modulesToDisplay = [];
+    for(int i=0; i<myModules.length; i++){
+      if(myModules[i].isListedToUser){
+        //add to the array
+        modulesToDisplay.add(ListTile(
+          title: Text(myModules[i].moduleName!),
+          subtitle: Text("(${myModules[i].moduleCode!})"),
+          leading: const Icon(Icons.assignment),
+          onTap: (){
+            // eventually do something more here,
+            print("tapped $i module");
+            currentModule = i;
+            currentPageIndex = 2;
+            Navigator.pushReplacementNamed(context, "/");
+          },
+        ));
+      }
+    }
+    return modulesToDisplay;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      appBar: AppBar(
+        
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text("My Modules"),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: ListView(
+              children: getModulesToDisplay()
+            ),
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        tooltip: 'New Module',
+        label: const Text("Add"),
+        icon: const Icon(Icons.add),
+        onPressed: (){
+          myModules.add(Module(true, false));
+          currentModule = myModules.length-1;
+          currentPageIndex = 2;
+          print(myModules.length);
+          Navigator.pushReplacementNamed(context, "/");
+        }
+      ),
+      bottomNavigationBar: NavigationBar(
+        destinations: navigationDestinations,
+        selectedIndex: currentPageIndex,
+        onDestinationSelected: (int index) {
+          if(index != currentPageIndex){
+            Navigator.pushReplacementNamed(context, getNewPageIndexStr(index));
+          }
+        },
+      ),
+    );
+  }
+}
