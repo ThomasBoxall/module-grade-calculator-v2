@@ -720,7 +720,7 @@ class _EditModuleInfoState extends State<EditModuleInfo> {
                           );
                           
                           myModules[currentModule].updateInformation(moduleNameController.text, moduleCodeController.text, int.parse(moduleCreditController.text), moduleLevelController.text, true);
-                          print(myModules[currentModule].moduleName);
+                          print(myModules[currentModule].isListedToUser);
                             
                             Future.delayed(const Duration(milliseconds: 1505), (){
                               
@@ -806,6 +806,30 @@ class MyModules extends StatefulWidget {
 }
 
 class _MyModulesState extends State<MyModules> {
+
+  List<Widget> getModulesToDisplay(){
+    List<Widget> modulesToDisplay = [];
+    for(int i=0; i<myModules.length; i++){
+      print("checking $i (${myModules[i].isListedToUser})");
+      if(myModules[i].isListedToUser){
+        print("adding $i");
+        //add to the array
+        modulesToDisplay.add(ListTile(
+          title: Text(myModules[i].moduleName!),
+          subtitle: Text("(${myModules[i].moduleCode!})"),
+          onTap: (){
+            // eventually do something more here,
+            print("tapped $i module");
+            currentModule = i;
+            currentPageIndex = 2;
+            Navigator.pushReplacementNamed(context, "/");
+          },
+        ));
+      }
+    }
+    return modulesToDisplay;
+  }
+
   @override
   Widget build(BuildContext context) {
     
@@ -819,26 +843,23 @@ class _MyModulesState extends State<MyModules> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            child: ListView.builder(
-              itemCount: myModules.length,
-              itemBuilder: (BuildContext context, int index){
-                if(myModules[index].isListedToUser){
-                  return ListTile(
-                    title: Text(myModules[index].moduleName!),
-                    subtitle: Text("(${myModules[index].moduleCode!})"),
-                    onTap: (){
-                      // eventually do something more here,
-                      print("tapped $index module");
-                      currentModule = index;
-                      currentPageIndex = 2;
-                      Navigator.pushReplacementNamed(context, "/");
-                    },
-                  );
-                }
-              },  
+            child: ListView(
+              children: getModulesToDisplay()
             ),
           )
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        tooltip: 'New Module',
+        label: const Text("Add"),
+        icon: const Icon(Icons.add),
+        onPressed: (){
+          myModules.add(Module(true, false));
+          currentModule = myModules.length-1;
+          currentPageIndex = 2;
+          print(myModules.length);
+          Navigator.pushReplacementNamed(context, "/");
+        }
       ),
       bottomNavigationBar: NavigationBar(
         destinations: navigationDestinations,
