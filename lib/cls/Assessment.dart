@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+part 'Assessment.g.dart';
 
 /// Class to represent a single assessment. Many assessments comprise a single module
+@HiveType(typeId: 1)
 class Assessment{
-  
+  @HiveField(0)
   String assessmentName;
+  @HiveField(1)
   int assessmentPercentageOfModule;
+  @HiveField(2)
   double markPercentageOfAssessment;
+  @HiveField(3)
   bool taken;
+  @HiveField(4)
   String assessmentType;
 
   /// Default Constructor: requires all parameters to be specified

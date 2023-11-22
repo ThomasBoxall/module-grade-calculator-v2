@@ -231,6 +231,9 @@ class _AddEditPageState extends State<AddEditPage> {
                           // delay slightly to give Snackbar a chance to display then save and move back to previous page
                           Future.delayed(const Duration(milliseconds: 1505), (){
                             clearAssessmentEditOptions();
+                            dbFlush();
+                            dbAdd();
+                            dbTestPrint();
                             Navigator.pop(context);
                           });
                         }

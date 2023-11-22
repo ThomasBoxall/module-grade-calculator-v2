@@ -1,4 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:path_provider/path_provider.dart' as pathProvider;
 
 import 'cls/Assessment.dart';
 import 'cls/AssessmentType.dart';
@@ -62,7 +67,7 @@ void clearAssessmentEditOptions(){
   assessmentFirstSetState = true;
 }
 
-void main() {
+void main() async {
   // lines below add assessments for testing
   // myModules.add(Module(true, true));
   myModules.add(Module.setAllValues("Test module", "MXXXX", 40, "Level 4", false, true));
@@ -72,7 +77,19 @@ void main() {
   print("myModules length ${myModules.length}");
   print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
+  WidgetsFlutterBinding.ensureInitialized();
+  await initHiveDB();
+  Box box = await Hive.openBox("myModulesBox");
+
   runApp(const MyApp());
+}
+
+Future<void> initHiveDB() async{
+  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+  await Hive.initFlutter(directory.path);
+  Hive.registerAdapter(ModuleAdapter());
+  Hive.registerAdapter(AssessmentAdapter());
+  await Hive.openBox("myModulesBox");
 }
 
 class MyApp extends StatelessWidget {
@@ -106,13 +123,24 @@ class MyApp extends StatelessWidget {
 }
 
 
+void dbFlush() async{
+  Hive.box("myModulesBox").clear();
+}
 
+void dbAdd() async{
+  Hive.box("myModulesBox").addAll(myModules);
+}
 
+void dbImportToArray() async{
+  for(int i=0; i<Hive.box("myModulesBox").length; i++){
+    myModules.add(Hive.box("myModulesBox").getAt(i));
+  }
+}
 
-
-
-
-
-
-
-
+void dbTestPrint() async{
+  print("START OF HIVE TEST PRINT");
+  for(int i=0; i<Hive.box("myModulesBox").length; i++){
+    print(Hive.box("myModulesBox").getAt(i));
+  }
+  print("END OF HIVE TEST PRINT");
+}

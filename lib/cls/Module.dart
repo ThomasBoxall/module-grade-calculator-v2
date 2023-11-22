@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import 'Assessment.dart';
 import 'AssessmentType.dart';
 
+part 'Module.g.dart';
 
 /// Class to represent a Module.
 /// Modules comprise of a number of options and an array of assessments
+@HiveType(typeId: 0)
 class Module{
+  @HiveField(0)
   String? moduleName;
+  @HiveField(1)
   String? moduleCode;
+  @HiveField(2)
   int? credits;
+  @HiveField(3)
   String? level;
+  @HiveField(4)
   bool isQuickEdit;
+  @HiveField(5)
   bool isListedToUser; // true="saved", false="un-saved" in terms of how the user sees it.
+  @HiveField(6)
   List<Assessment> assessments = [];
 
   // Default constructor: only requires isQuickEdit and isListedToUser to be defined because "un-saved" modules don't require any other info.
