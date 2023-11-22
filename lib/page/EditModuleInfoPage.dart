@@ -62,7 +62,7 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
         child: Form (
           key: _editModueFormKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child:Column(
+          child:ListView(
             
             children: <Widget>[
               Text(

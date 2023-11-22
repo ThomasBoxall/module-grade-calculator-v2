@@ -43,8 +43,7 @@ class _MyModulesState extends State<MyModules> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("My Modules"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: ListView(
         children: <Widget>[
           Expanded(
             child: ListView(

@@ -83,7 +83,7 @@ class _AddEditPageState extends State<AddEditPage> {
         child: Form(
           key: _addEditFormKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
+          child: ListView(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
