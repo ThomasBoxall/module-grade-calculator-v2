@@ -7,9 +7,7 @@ import '../cls/Assessment.dart';
 class AddEditPage extends StatefulWidget {
   const AddEditPage({super.key, required this.isEdit});
 
-
-  final bool isEdit;
-
+  final bool isEdit; // used to define what mode the page is in. Required to be passed as param every time the page is opened.
 
   @override
   State<AddEditPage> createState() => _AddEditPageState();
@@ -17,18 +15,26 @@ class AddEditPage extends StatefulWidget {
 
 class _AddEditPageState extends State<AddEditPage> {
 
+  // Text editing controllers for input fields
   late TextEditingController assessmentNameController = TextEditingController();
   late TextEditingController assessmentPercentageOfModuleController = TextEditingController();
   late TextEditingController markPercentageOfAssessmentController = TextEditingController();
   late TextEditingController assessmentIconController = TextEditingController();
+  
+  /// variable to store assessment taken checkbox value in
   bool assessmentTakenCheckboxValue = true;
   
+  /// Key to control form with
   final _addEditFormKey = GlobalKey<FormState>();
 
+  /// Stores the key for selected assessment type value corresponds to `assessmentTypes` map.
+  /// Defaults to `ass` to ensure valid data is saved if not selected by user
   String assessmentTypeCode = "ass";
 
+  /// Stores the current total module assessment percentage which is manipulated and used for validation
   int totalModuleAssessmentsPercentage = myModules[currentModule].getAssessmentTotalAssValue();
 
+  /// Updates the assessmentTypeCode local variable
   void updateAssessmentTypeCode(String code){
     assessmentTypeCode = code;
   }
@@ -205,13 +211,6 @@ class _AddEditPageState extends State<AddEditPage> {
                           );
                           if(!widget.isEdit){
                             // Adding assessment
-                            print("ASS TO ADD:");
-                            print("TYPE: ${assessmentTypeCode}");
-                            print("NAME: ${assessmentNameController.text}");
-                            print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
-                            print("TAKEN: ${assessmentTakenCheckboxValue}");
-                            print("% OF ASS: ${markPercentageOfAssessmentController.text}");
-                            print("Total ASS%: ${totalModuleAssessmentsPercentage}");
                             if(assessmentTakenCheckboxValue){
                               // assessment has been taken and therefore can be shoved in as usual.
                               myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
@@ -219,30 +218,20 @@ class _AddEditPageState extends State<AddEditPage> {
                               //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
                               myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
                             }
-                            
-                            print("Total ASS% with new: ${myModules[currentModule].getAssessmentTotalAssValue()}");
-
-                            } else{
-                              // Saving edited assessment
-                              print("ASS TO EDIT:");
-                              print("TYPE: ${assessmentTypeCode}");
-                              print("NAME: ${assessmentNameController.text}");
-                              print("ASS % OF MOD: ${assessmentPercentageOfModuleController.text}");
-                              print("TAKEN: ${assessmentTakenCheckboxValue}");
-                              print("% OF ASS: ${markPercentageOfAssessmentController.text}");
-                              print("Total ASS%: ${totalModuleAssessmentsPercentage}");
-                              if(assessmentTakenCheckboxValue){
-                                // assessment has been taken and therefore can be shoved in as usual.
-                                myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue);
-                              } else {
-                                //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
-                                myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue);
-                              }
+                          } else{
+                            // Saving edited assessment
+                            if(assessmentTakenCheckboxValue){
+                              // assessment has been taken and therefore can be shoved in as usual.
+                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue);
+                            } else {
+                              //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
+                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue);
                             }
-                            
-                            Future.delayed(const Duration(milliseconds: 1505), (){
-                              clearAssessmentEditOptions();
-                              Navigator.pop(context);
+                          }
+                          // delay slightly to give Snackbar a chance to display then save and move back to previous page
+                          Future.delayed(const Duration(milliseconds: 1505), (){
+                            clearAssessmentEditOptions();
+                            Navigator.pop(context);
                           });
                         }
                       },

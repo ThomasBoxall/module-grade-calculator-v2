@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 
+/// Class to represent a single assessment. Many assessments comprise a single module
 class Assessment{
-  /// Class to represent a single assessment. Many assessments comprise a single module
   
   String assessmentName;
   int assessmentPercentageOfModule;
   double markPercentageOfAssessment;
-  // Icon assessmentIcon;
   bool taken;
   String assessmentType;
 
-
+  /// Default Constructor: requires all parameters to be specified
   Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentType,  this.taken);
 
-  void updateAssessment(assessmentName, assessmentPercentageOfModule, markPercentageOfModule, assessmentType, taken){
+  /// Updates all values in the assessment
+  void updateAssessment(assessmentName, assessmentPercentageOfModule, markPercentageOfAssessment, assessmentType, taken){
     this.assessmentName = assessmentName;
     this.assessmentPercentageOfModule = assessmentPercentageOfModule;
     this.markPercentageOfAssessment = markPercentageOfAssessment;
@@ -23,12 +23,4 @@ class Assessment{
   }
 }
 
-// enum AssessmentTypes {
-//   exam('Exam', Icons.edit),
-//   cbt('Computer Based Test', Icons.computer);
-  
-//   const AssessmentTypes(this.label, this.icon);
-//   final String label;
-//   final IconData icon;
-// }
 

@@ -11,6 +11,7 @@ class MyModules extends StatefulWidget {
 
 class _MyModulesState extends State<MyModules> {
 
+  /// Return list of widgets to be inserted into ListView
   List<Widget> getModulesToDisplay(){
     List<Widget> modulesToDisplay = [];
     for(int i=0; i<myModules.length; i++){

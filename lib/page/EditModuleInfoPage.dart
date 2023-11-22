@@ -11,6 +11,7 @@ class EditModuleInfoPage extends StatefulWidget {
 
 class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
 
+  // TextEditingControllers for input fields
   late TextEditingController moduleNameController = TextEditingController();
   late TextEditingController moduleCodeController = TextEditingController();
   late TextEditingController moduleCreditController = TextEditingController();
@@ -20,7 +21,8 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    
+    ///Build list of DropdownMenuEntry objects to select module level through
     List<DropdownMenuEntry<String>> buildModuleLevelDropdownItems(){
       List<DropdownMenuEntry<String>> menuItems = [];
       moduleLevels.forEach((element) {
@@ -34,6 +36,7 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
       return menuItems;
     }
 
+    // Define a variable to be used to warn users about the "save" state of the module. 
     String moduleSaveStateWarning = myModules[currentModule].isListedToUser ? "Module saved" : "Module not saved"; // make this look prettier somehow? snackbar time???
 
     // if module options are not null then we want to render them
@@ -121,13 +124,6 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
                       width: constraints.maxWidth,
                       requestFocusOnTap: false,
                       enableFilter: false,
-                      onSelected: (String? value) {
-                        // setState(() {
-                        //   print(value!.code);
-                        //   assessmentTypeCode = value.code;
-                        // });
-                        print(value!);
-                      },
                     );
                   }
                 ),

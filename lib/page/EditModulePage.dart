@@ -12,6 +12,8 @@ class EditModulePage extends StatefulWidget {
 
 class _EditModulePageState extends State<EditModulePage> {
 
+  /// Refreshes all data on the route
+  /// To be used whenever data value changes or page is returned to by Navigator.pop
   void refreshRoute(){
     clearAssessmentEditOptions();
     setState(() {
@@ -109,7 +111,7 @@ class _EditModulePageState extends State<EditModulePage> {
                   leading: Icon(myModules[currentModule].getAssessmentIcon(index)),
                   onTap: () {
                     assessmentToEdit = index;
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: true))).then((value) => refreshRoute());                  },
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: true))).then((value) => refreshRoute());},
                   trailing: PopupMenuButton<int>(
                     itemBuilder: (context) => [
                       const PopupMenuItem(
