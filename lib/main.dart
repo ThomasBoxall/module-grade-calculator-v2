@@ -810,13 +810,12 @@ class _MyModulesState extends State<MyModules> {
   List<Widget> getModulesToDisplay(){
     List<Widget> modulesToDisplay = [];
     for(int i=0; i<myModules.length; i++){
-      print("checking $i (${myModules[i].isListedToUser})");
       if(myModules[i].isListedToUser){
-        print("adding $i");
         //add to the array
         modulesToDisplay.add(ListTile(
           title: Text(myModules[i].moduleName!),
           subtitle: Text("(${myModules[i].moduleCode!})"),
+          leading: const Icon(Icons.assignment),
           onTap: (){
             // eventually do something more here,
             print("tapped $i module");
