@@ -63,7 +63,9 @@ int currentModule = -1; //this is used to set which module in myModules should b
 int assessmentToEdit = -1; // used to set which assessment should be edited when editMode in AddEditPage is true. Set back to -1 when not in use.
 bool assessmentFirstSetState = true;
 
-List templateModules = [];
+List<Module> templateModules = [];
+
+List<dynamic> testArr = [];
 
 void clearAssessmentEditOptions(){
   /// Resets variables used when editing assessments after they're used to sort whacky behaviour out.
@@ -85,8 +87,10 @@ void main() async {
   await initHiveDB();
   dbImportToArray();
 
-  importTemplateModules();
-  print(templateModules);
+  await importTemplateModules();
+  print("templateModules length ${templateModules.length} \n first item:");
+  print(templateModules[0]);
+  // print(testArr);
 
   runApp(const MyApp());
 }
@@ -102,9 +106,12 @@ Future<void> initHiveDB() async{
 }
 
 Future<void> importTemplateModules() async {
-final String response = await rootBundle.loadString('assets/templateModules.json');
-templateModules = await json.decode(response);
-// ... 
+  String response = await rootBundle.loadString('assets/templateModules.json');
+  Map<String, dynamic> decodedJson = json.decode(response);
+  for(Map<String, dynamic> current in decodedJson['modules']){
+    templateModules.add(Module.fromJson(current));
+  }
+
 }
 
 class MyApp extends StatelessWidget {

@@ -39,7 +39,7 @@ class Assessment{
     };
   }
 
-  factory Assessment.fromJson(dynamic json){
+  factory Assessment.fromJson(Map<String, dynamic> json){
     return Assessment(
       json['assessmentName'] as String,
       json['assessmentPercentageOfModule'] as int,

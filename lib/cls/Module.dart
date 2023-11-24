@@ -121,7 +121,11 @@ class Module{
     };
   }
 
-  factory Module.fromJson(dynamic json){
+  factory Module.fromJson(Map<String, dynamic> json){
+    List<Assessment> newAssessments = [];
+    for(Map<String, dynamic> ass in json['assessments']){
+        newAssessments.add(Assessment.fromJson(ass));
+    }
     return Module.setAllValuesIncAssessments(
       json['moduleName'] as String?, 
       json['moduleCode'] as String?,
@@ -130,7 +134,7 @@ class Module{
       json['isQuickEdit'] as bool,
       json['isListedToUser'] as bool,
       json['university'] as String,
-      jsonDecode(json['assessments']),
+      newAssessments 
     );
   }
 }
