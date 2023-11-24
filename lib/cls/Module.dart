@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '../main.dart';
@@ -99,6 +101,21 @@ class Module{
       }
     }
     return ((total * 100).round().toDouble()) / 100;
+  }
+
+  Map toJson(){
+    // List<Map> assessmentsToJson = assessments != null ? assessments.toJson() : null;
+    
+    return{
+    'moduleName': moduleName,
+    'moduleCode': moduleCode,
+    'credits': credits,
+    'level': level,
+    'isQuickEdit': isQuickEdit,
+    'isListedToUser': isListedToUser,
+    'university': university,
+    'assessments': jsonEncode(assessments)
+    };
   }
 }
 

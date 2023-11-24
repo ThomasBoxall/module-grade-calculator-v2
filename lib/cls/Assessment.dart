@@ -28,6 +28,16 @@ class Assessment{
     this.assessmentType = assessmentType;
     this.taken = taken;
   }
+
+  Map toJson(){
+    return{
+      'assessmentName': this.assessmentName,
+      'assessmentPercentageOfModule': this.assessmentPercentageOfModule,
+      'markPercentageOfAssessment': this.markPercentageOfAssessment,
+      'taken': this.taken,
+      'assessmentType': this.assessmentType
+    };
+  }
 }
 
 
