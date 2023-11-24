@@ -38,6 +38,16 @@ class Assessment{
       'assessmentType': this.assessmentType
     };
   }
+
+  factory Assessment.fromJson(dynamic json){
+    return Assessment(
+      json['assessmentName'] as String,
+      json['assessmentPercentageOfModule'] as int,
+      json['markPercentageOfAssessment'] as double,
+      json['assessmentType'] as String,
+      json['taken'] as bool
+    );
+  }
 }
 
 

@@ -1,0 +1,34 @@
+[
+    {
+        "moduleName":"Test module",
+        "moduleCode":"MXXXX",
+        "credits":40,
+        "level":"Level 4",
+        "isQuickEdit":false,
+        "isListedToUser":true,
+        "university":"quick",
+        "assessments":[
+            {
+                "assessmentName":"Exam",
+                "assessmentPercentageOfModule":20,
+                "markPercentageOfAssessment":80.0,
+                "taken":true,
+                "assessmentType":"cbt"
+            },
+            {
+                "assessmentName":"Exam",
+                "assessmentPercentageOfModule":20,
+                "markPercentageOfAssessment":81.0,
+                "taken":true,
+                "assessmentType":"cbt"
+            },
+            {
+                "assessmentName":"Exam",
+                "assessmentPercentageOfModule":20,
+                "markPercentageOfAssessment":82.0,
+                "taken":true,
+                "assessmentType":"cbt"
+            }
+        ]
+    }
+]

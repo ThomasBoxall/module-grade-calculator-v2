@@ -36,6 +36,9 @@ class Module{
   // Additional constructor: Instantiates a new module with all parameters defined (primarily used for testing)
   Module.setAllValues(this.moduleName, this.moduleCode, this.credits, this.level, this.isQuickEdit, this.isListedToUser, this.university);
 
+  // Another additional constructor for use when importing from Json 
+  Module.setAllValuesIncAssessments(this.moduleName, this.moduleCode, this.credits, this.level, this.isQuickEdit, this.isListedToUser, this.university, this.assessments);
+
   void updateInformation(modName, modCode, cred, lev, listToUsr){
     /// Updates all values in the Module
     this.moduleName = modName;
@@ -116,6 +119,19 @@ class Module{
     'university': university,
     'assessments': jsonEncode(assessments)
     };
+  }
+
+  factory Module.fromJson(dynamic json){
+    return Module.setAllValuesIncAssessments(
+      json['moduleName'] as String?, 
+      json['moduleCode'] as String?,
+      json['credits'] as int?,
+      json['level'] as String?,
+      json['isQuickEdit'] as bool,
+      json['isListedToUser'] as bool,
+      json['university'] as String,
+      jsonDecode(json['assessments']),
+    );
   }
 }
 

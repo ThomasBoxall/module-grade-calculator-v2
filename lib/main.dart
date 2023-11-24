@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -61,6 +63,8 @@ int currentModule = -1; //this is used to set which module in myModules should b
 int assessmentToEdit = -1; // used to set which assessment should be edited when editMode in AddEditPage is true. Set back to -1 when not in use.
 bool assessmentFirstSetState = true;
 
+List templateModules = [];
+
 void clearAssessmentEditOptions(){
   /// Resets variables used when editing assessments after they're used to sort whacky behaviour out.
   assessmentToEdit = -1;
@@ -81,6 +85,8 @@ void main() async {
   await initHiveDB();
   dbImportToArray();
 
+  importTemplateModules();
+  print(templateModules);
 
   runApp(const MyApp());
 }
@@ -93,6 +99,12 @@ Future<void> initHiveDB() async{
   // Hive.deleteBoxFromDisk("myModulesBox");
   await Hive.openBox("myModulesBox");
 
+}
+
+Future<void> importTemplateModules() async {
+final String response = await rootBundle.loadString('assets/templateModules.json');
+templateModules = await json.decode(response);
+// ... 
 }
 
 class MyApp extends StatelessWidget {
