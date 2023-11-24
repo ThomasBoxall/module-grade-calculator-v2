@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import '../main.dart';
 
 import 'Assessment.dart';
 import 'AssessmentType.dart';
@@ -23,13 +24,15 @@ class Module{
   @HiveField(5)
   bool isListedToUser; // true="saved", false="un-saved" in terms of how the user sees it.
   @HiveField(6)
+  String university;
+  @HiveField(7)
   List<Assessment> assessments = [];
 
   // Default constructor: only requires isQuickEdit and isListedToUser to be defined because "un-saved" modules don't require any other info.
-  Module(this.isQuickEdit, this.isListedToUser);
+  Module(this.isQuickEdit, this.isListedToUser, this.university);
 
   // Additional constructor: Instantiates a new module with all parameters defined (primarily used for testing)
-  Module.setAllValues(this.moduleName, this.moduleCode, this.credits, this.level, this.isQuickEdit, this.isListedToUser);
+  Module.setAllValues(this.moduleName, this.moduleCode, this.credits, this.level, this.isQuickEdit, this.isListedToUser, this.university);
 
   void updateInformation(modName, modCode, cred, lev, listToUsr){
     /// Updates all values in the Module
@@ -101,3 +104,8 @@ class Module{
 
 /// List of module level values to be used in the module level dropdown
 List<String> moduleLevels = ["Level 4", "Level 5", "Level 6", "Level 7"];
+
+Map<String, String> universities = {
+  "quick": "Quick Calculator",
+  "port": "University of Portsmouth"
+};

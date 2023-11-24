@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../main.dart';
 import 'package:flutter/material.dart';
 import '../cls/Module.dart';
@@ -166,6 +168,7 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
                           dbFlush();
                           dbAdd();
                           dbTestPrint();
+                          print(jsonEncode(myModules));
                           Future.delayed(const Duration(milliseconds: 1505), (){
                             
                             Navigator.pop(context);

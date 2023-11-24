@@ -19,18 +19,19 @@ class ModuleAdapter extends TypeAdapter<Module> {
     return Module(
       fields[4] as bool,
       fields[5] as bool,
+      fields[6] as String,
     )
       ..moduleName = fields[0] as String?
       ..moduleCode = fields[1] as String?
       ..credits = fields[2] as int?
       ..level = fields[3] as String?
-      ..assessments = (fields[6] as List).cast<Assessment>();
+      ..assessments = (fields[7] as List).cast<Assessment>();
   }
 
   @override
   void write(BinaryWriter writer, Module obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.moduleName)
       ..writeByte(1)
@@ -44,6 +45,8 @@ class ModuleAdapter extends TypeAdapter<Module> {
       ..writeByte(5)
       ..write(obj.isListedToUser)
       ..writeByte(6)
+      ..write(obj.university)
+      ..writeByte(7)
       ..write(obj.assessments);
   }
 

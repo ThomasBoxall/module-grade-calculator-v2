@@ -70,7 +70,7 @@ void clearAssessmentEditOptions(){
 void main() async {
   // lines below add assessments for testing
   // myModules.add(Module(true, true));
-  myModules.add(Module.setAllValues("Test module", "MXXXX", 40, "Level 4", false, true));
+  myModules.add(Module.setAllValues("Test module", "MXXXX", 40, "Level 4", false, true, "quick"));
   myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 81, "cbt", true));
   myModules[0].addAssessment(Assessment("Exam", 20, 82, "cbt", true));
@@ -90,7 +90,9 @@ Future<void> initHiveDB() async{
   await Hive.initFlutter(directory.path);
   Hive.registerAdapter(ModuleAdapter());
   Hive.registerAdapter(AssessmentAdapter());
+  // Hive.deleteBoxFromDisk("myModulesBox");
   await Hive.openBox("myModulesBox");
+
 }
 
 class MyApp extends StatelessWidget {
@@ -101,7 +103,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // get currentModule value and if it's -1 this means we need to add a module to the module array so app can open on quick calculator. We have to setup a quick calculator module as this is what the app relies on to open.
     if(currentModule == -1){
-      myModules.add(Module(true, false));
+      myModules.add(Module(true, false, "quick"));
       currentModule = myModules.length-1;
     }
 

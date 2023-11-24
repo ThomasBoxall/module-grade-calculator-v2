@@ -43,21 +43,16 @@ class _MyModulesState extends State<MyModules> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("My Modules"),
       ),
-      body: ListView(
-        children: <Widget>[
-          Expanded(
-            child: ListView(
-              children: getModulesToDisplay()
-            ),
-          )
-        ],
-      ),
+      body:
+        ListView(
+          children: getModulesToDisplay()
+        ),
       floatingActionButton: FloatingActionButton.extended(
         tooltip: 'New Module',
         label: const Text("Add"),
         icon: const Icon(Icons.add),
         onPressed: (){
-          myModules.add(Module(true, false));
+          myModules.add(Module(true, false, "quick"));
           currentModule = myModules.length-1;
           currentPageIndex = 2;
           print(myModules.length);
