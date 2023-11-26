@@ -15,9 +15,16 @@ class AssessmentType{
 
 /// Map containing the different available assessment types
 final Map<String, AssessmentType> assessmentTypes = {
-  "ass": AssessmentType("generic Assessment", Icons.question_mark, "ass"),
-  "exm": AssessmentType("Exam", Icons.edit, "exm"),
-  "cbt": AssessmentType("Computer Based Test", Icons.computer, "cbt")
+  "ass": AssessmentType("Assessment - Generic", Icons.quiz_outlined, "ass"),
+  "cwk": AssessmentType("Coursework", Icons.assignment_outlined, "cwk"),
+  "prs": AssessmentType("Coursework - Presentation", Icons.co_present, "prs"),
+  "pot": AssessmentType("Coursework - Portfolio", Icons.newspaper, "pot"),
+  "rep": AssessmentType("Coursework - Report", Icons.layers_outlined, "rep"),
+  "pct": AssessmentType("Coursework - Practical", Icons.science_outlined, "pct"),
+  "exm": AssessmentType("Exam", Icons.edit_outlined, "exm"),
+  "cbt": AssessmentType("Exam - Computer Based", Icons.computer, "cbt"),
+  "quz": AssessmentType("Quiz", Icons.checklist_rtl, "quz")
+
 };
 
 /// Return the `name` value of the corresponding AssessmentType object in the assessmentTypes map

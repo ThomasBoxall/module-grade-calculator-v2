@@ -35,7 +35,7 @@ class _EditModulePageState extends State<EditModulePage> {
         actions: [
           IconButton(
             onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const EditModuleInfoPage())).then((value) => refreshRoute());},
-            icon: const Icon(Icons.edit_attributes)
+            icon: const Icon(Icons.tune)
           )
         ],
       ),

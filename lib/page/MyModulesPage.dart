@@ -20,7 +20,8 @@ class _MyModulesState extends State<MyModules> {
         modulesToDisplay.add(ListTile(
           title: Text(myModules[i].moduleName!),
           subtitle: Text("(${myModules[i].moduleCode!})"),
-          leading: const Icon(Icons.assignment),
+          leading: const Icon(Icons.view_module_outlined),
+          trailing: const Icon(Icons.arrow_right),
           onTap: (){
             // eventually do something more here,
             print("tapped $i module");
