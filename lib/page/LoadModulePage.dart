@@ -39,6 +39,8 @@ class _LoadModulePageState extends State<LoadModulePage> {
         widgets.add(ListTile(
           title: Text(templateModules[i].moduleName!),
           subtitle: Text(templateModules[i].moduleCode!),
+          leading: const Icon(Icons.view_module_outlined),
+          trailing: const Icon(Icons.arrow_right),
           onTap: () {
             myModules.add(templateModules[i]);
             currentModule = myModules.length - 1; // the last one added will always be the one we've just added

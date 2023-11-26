@@ -119,6 +119,7 @@ class _EditModulePageState extends State<EditModulePage> {
                         child: Row(
                           children: <Widget>[
                             Icon(Icons.edit),
+                            SizedBox(width: 10),
                             Text("Edit"),
                           ]
                         )
@@ -128,6 +129,7 @@ class _EditModulePageState extends State<EditModulePage> {
                         child: Row(
                           children: <Widget>[
                             Icon(Icons.delete),
+                            SizedBox(width: 10),
                             Text("Delete"),
                           ]
                         )

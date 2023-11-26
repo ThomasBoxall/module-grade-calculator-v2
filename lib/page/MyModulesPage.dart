@@ -11,6 +11,12 @@ class MyModules extends StatefulWidget {
 
 class _MyModulesState extends State<MyModules> {
 
+  void refreshRoute(){
+    setState(() {});
+    dbFlush();
+    dbAdd();
+  }
+
   /// Return list of widgets to be inserted into ListView
   List<Widget> getModulesToDisplay(){
     List<Widget> modulesToDisplay = [];
@@ -21,14 +27,50 @@ class _MyModulesState extends State<MyModules> {
           title: Text(myModules[i].moduleName!),
           subtitle: Text("(${myModules[i].moduleCode!})"),
           leading: const Icon(Icons.view_module_outlined),
-          trailing: const Icon(Icons.arrow_right),
           onTap: (){
             // eventually do something more here,
-            print("tapped $i module");
             currentModule = i;
             currentPageIndex = 2;
             Navigator.pushReplacementNamed(context, "/");
           },
+          trailing: PopupMenuButton<int>(
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 1,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.edit),
+                    SizedBox(width: 10),
+                    Text("Edit"),
+                  ]
+                )
+              ),
+              const PopupMenuItem(
+                value: 2,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.delete),
+                    SizedBox(width: 10),
+                    Text("Delete"),
+                  ]
+                )
+              )
+            ],
+            onSelected:(value){
+              if(value == 1){
+                // edit
+                // print("$index - 1");
+                currentModule = i;
+                currentPageIndex = 2;
+                refreshRoute();
+                Navigator.pushReplacementNamed(context, "/");
+              } else if (value == 2){
+                //delete
+                myModules.removeAt(i);
+                refreshRoute();
+              }
+            },
+          ),
         ));
       }
     }
