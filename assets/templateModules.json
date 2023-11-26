@@ -1,8 +1,8 @@
 {
     "modules": [
         {
-            "moduleName":"Test module",
-            "moduleCode":"MXXXX",
+            "moduleName":"Test Loading",
+            "moduleCode":"Myyyy",
             "credits":40,
             "level":"Level 4",
             "isQuickEdit":false,
@@ -12,23 +12,23 @@
                 {
                     "assessmentName":"Exam",
                     "assessmentPercentageOfModule":20,
-                    "markPercentageOfAssessment":80.0,
+                    "markPercentageOfAssessment":50.0,
                     "taken":true,
-                    "assessmentType":"cbt"
+                    "assessmentType":"exm"
                 },
                 {
                     "assessmentName":"Exam",
                     "assessmentPercentageOfModule":20,
-                    "markPercentageOfAssessment":81.0,
+                    "markPercentageOfAssessment":50.0,
                     "taken":true,
-                    "assessmentType":"cbt"
+                    "assessmentType":"exm"
                 },
                 {
                     "assessmentName":"Exam",
                     "assessmentPercentageOfModule":20,
-                    "markPercentageOfAssessment":82.0,
+                    "markPercentageOfAssessment":50.0,
                     "taken":true,
-                    "assessmentType":"cbt"
+                    "assessmentType":"exm"
                 }
             ]
         }

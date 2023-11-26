@@ -106,9 +106,10 @@ Future<void> initHiveDB() async{
 }
 
 Future<void> importTemplateModules() async {
-  String response = await rootBundle.loadString('assets/templateModules.json');
-  Map<String, dynamic> decodedJson = json.decode(response);
+  String response = await rootBundle.loadString('assets/templateModules.json'); // open the json file and load it as a string
+  Map<String, dynamic> decodedJson = json.decode(response); // decode the string into Map
   for(Map<String, dynamic> current in decodedJson['modules']){
+    // iterate through the Map and for each entry in the 'modules' arr, add it to the templateModules List in the correct format.
     templateModules.add(Module.fromJson(current));
   }
 
@@ -135,7 +136,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const EditModulePage(),
       routes: <String, WidgetBuilder> {
-        "/load-module":(context) => const LoadModulePage(title: 'Load Module'),
+        "/load-module":(context) => const LoadModulePage(),
         "/about":(context) => const AboutPage(title: 'About'),
         "/my-modules":(context) => const MyModules()
       },
