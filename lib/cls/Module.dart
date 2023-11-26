@@ -143,6 +143,5 @@ class Module{
 List<String> moduleLevels = ["Level 4", "Level 5", "Level 6", "Level 7"];
 
 Map<String, String> universities = {
-  "quick": "Quick Calculator",
   "port": "University of Portsmouth"
 };

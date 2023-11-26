@@ -38,7 +38,7 @@ class _LoadModulePageState extends State<LoadModulePage> {
         // only render template module if it belongs to current university
         widgets.add(ListTile(
           title: Text(templateModules[i].moduleName!),
-          subtitle: Text(templateModules[i].moduleCode!),
+          subtitle: Text("${templateModules[i].moduleCode!} (${templateModules[i].level!})"),
           leading: const Icon(Icons.view_module_outlined),
           trailing: const Icon(Icons.arrow_right),
           onTap: () {

@@ -112,6 +112,7 @@ Future<void> importTemplateModules() async {
     // iterate through the Map and for each entry in the 'modules' arr, add it to the templateModules List in the correct format.
     templateModules.add(Module.fromJson(current));
   }
+  templateModules.sort((a, b) => a.moduleCode!.compareTo(b.moduleCode!));
 
 }
 
