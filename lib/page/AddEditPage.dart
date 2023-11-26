@@ -32,7 +32,7 @@ class _AddEditPageState extends State<AddEditPage> {
   String assessmentTypeCode = "ass";
 
   /// Stores the current total module assessment percentage which is manipulated and used for validation
-  int totalModuleAssessmentsPercentage = myModules[currentModule].getAssessmentTotalAssValue();
+  double totalModuleAssessmentsPercentage = myModules[currentModule].getAssessmentTotalAssValue();
 
   /// Updates the assessmentTypeCode local variable
   void updateAssessmentTypeCode(String code){
@@ -130,12 +130,14 @@ class _AddEditPageState extends State<AddEditPage> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a value';
-                    } else if(!isInt(value)){
+                    } else if(!isDouble(value)){
                       return 'Please enter a whole number';
-                    } else if(int.parse(value) > 100 || int.parse(value) < 0){
-                      return 'Please enter a value between 0 and 100';
-                    } else if(totalModuleAssessmentsPercentage + int.parse(value) > 100){
-                      return "Please enter a value which total your overall assessment percentage to less than 100%";
+                    } else {
+                      if(double.parse(value) > 100 || double.parse(value) < 0){
+                        return 'Please enter a value between 0 and 100';
+                      } else if(totalModuleAssessmentsPercentage + double.parse(value) > 100){
+                        return "Please enter a value which total your overall assessment percentage to less than 100%";
+                      }
                     }
                     return null;
                   },
@@ -213,19 +215,19 @@ class _AddEditPageState extends State<AddEditPage> {
                             // Adding assessment
                             if(assessmentTakenCheckboxValue){
                               // assessment has been taken and therefore can be shoved in as usual.
-                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
+                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, double.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue));
                             } else {
                               //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
-                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
+                              myModules[currentModule].addAssessment(Assessment(assessmentNameController.text, double.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue));
                             }
                           } else{
                             // Saving edited assessment
                             if(assessmentTakenCheckboxValue){
                               // assessment has been taken and therefore can be shoved in as usual.
-                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue);
+                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, double.parse(assessmentPercentageOfModuleController.text), double.parse(markPercentageOfAssessmentController.text), assessmentTypeCode, assessmentTakenCheckboxValue);
                             } else {
                               //assessment hasn't been taken or checkbox is having a fit. We need to be *quirky* in how we insert the assessment by specifying some values.
-                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, int.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue);
+                              myModules[currentModule].assessments[assessmentToEdit].updateAssessment(assessmentNameController.text, double.parse(assessmentPercentageOfModuleController.text), 0.0, assessmentTypeCode, assessmentTakenCheckboxValue);
                             }
                           }
                           // delay slightly to give Snackbar a chance to display then save and move back to previous page

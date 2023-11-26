@@ -9,7 +9,7 @@ class Assessment{
   @HiveField(0)
   String assessmentName;
   @HiveField(1)
-  int assessmentPercentageOfModule;
+  double assessmentPercentageOfModule;
   @HiveField(2)
   double markPercentageOfAssessment;
   @HiveField(3)
@@ -42,7 +42,7 @@ class Assessment{
   factory Assessment.fromJson(Map<String, dynamic> json){
     return Assessment(
       json['assessmentName'] as String,
-      json['assessmentPercentageOfModule'] as int,
+      json['assessmentPercentageOfModule'] as double,
       json['markPercentageOfAssessment'] as double,
       json['assessmentType'] as String,
       json['taken'] as bool

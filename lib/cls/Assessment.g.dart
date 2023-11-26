@@ -18,7 +18,7 @@ class AssessmentAdapter extends TypeAdapter<Assessment> {
     };
     return Assessment(
       fields[0] as String,
-      fields[1] as int,
+      fields[1] as double,
       fields[2] as double,
       fields[4] as String,
       fields[3] as bool,

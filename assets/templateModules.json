@@ -11,14 +11,14 @@
             "assessments":[
                 {
                     "assessmentName":"Coursework",
-                    "assessmentPercentageOfModule":50,
+                    "assessmentPercentageOfModule":50.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"cwk"
                 },
                 {
                     "assessmentName":"Final Exam",
-                    "assessmentPercentageOfModule":50,
+                    "assessmentPercentageOfModule":50.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"exm"
@@ -36,14 +36,14 @@
             "assessments":[
                 {
                     "assessmentName":"Item 1",
-                    "assessmentPercentageOfModule":50,
+                    "assessmentPercentageOfModule":50.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"cwk"
                 },
                 {
                     "assessmentName":"Item 2",
-                    "assessmentPercentageOfModule":50,
+                    "assessmentPercentageOfModule":50.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"cwk"
@@ -61,14 +61,14 @@
             "assessments":[
                 {
                     "assessmentName":"Exam 1 (Mid unit)",
-                    "assessmentPercentageOfModule":30,
+                    "assessmentPercentageOfModule":30.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"exm"
                 },
                 {
                     "assessmentName":"Exam 2 (End of Unit)",
-                    "assessmentPercentageOfModule":70,
+                    "assessmentPercentageOfModule":70.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"exm"
@@ -86,21 +86,21 @@
             "assessments":[
                 {
                     "assessmentName":"OS Quiz total",
-                    "assessmentPercentageOfModule":15,
+                    "assessmentPercentageOfModule":15.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"quz"
                 },
                 {
                     "assessmentName":"Internetworking Quiz totals",
-                    "assessmentPercentageOfModule":15,
+                    "assessmentPercentageOfModule":15.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"quz"
                 },
                 {
                     "assessmentName":"Final Exam",
-                    "assessmentPercentageOfModule":70,
+                    "assessmentPercentageOfModule":70.0,
                     "markPercentageOfAssessment":0.0,
                     "taken":false,
                     "assessmentType":"exm"

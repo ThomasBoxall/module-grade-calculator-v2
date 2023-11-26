@@ -2,10 +2,8 @@
 Module Grade Calculator Project created for PAPPL L5 module at UoP
 
 ## TODO
-* Change Module.assessmentPercentageOfModule to be a double and ensure that integrates throughout the app
 * Add filter to MyModules display route to filter between quick added and template - if not something else needs to go between appBar and start of the ListTiles
 * Complete LoadModulePage
-  * Add searching
   * Add filtering base on level
 * More work on myModules
   * Make EditModuleInfo's warning about saved state look better (snackbar?? / coloured list tile??) 

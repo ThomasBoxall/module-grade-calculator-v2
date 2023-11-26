@@ -19,6 +19,8 @@ class _LoadModulePageState extends State<LoadModulePage> {
 
   String selectedUniversity = "null";
 
+  String searchTerm = "";
+
   List<DropdownMenuEntry<String>> buildListModulesUniversityFilterItems(){
     List<DropdownMenuEntry<String>> universityFilterItems = [];
     universities.forEach((key, value){
@@ -31,10 +33,10 @@ class _LoadModulePageState extends State<LoadModulePage> {
     return universityFilterItems;
   }
 
-  List<Widget> getModulesToShow(){
+  List<Widget> getModulesToShow(String searchParam){
     List<Widget> widgets = [];
     for(int i=0; i<templateModules.length; i++){
-      if(templateModules[i].university == selectedUniversity){
+      if(templateModules[i].university == selectedUniversity && (templateModules[i].moduleName!.toLowerCase().contains(searchParam) || templateModules[i].moduleCode!.toLowerCase().contains(searchParam))){
         // only render template module if it belongs to current university
         widgets.add(ListTile(
           title: Text(templateModules[i].moduleName!),
@@ -67,7 +69,6 @@ class _LoadModulePageState extends State<LoadModulePage> {
     
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Load Module"),
       ),
@@ -97,9 +98,23 @@ class _LoadModulePageState extends State<LoadModulePage> {
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: SearchBar(
+                leading: const Icon(Icons.search),
+                padding: const MaterialStatePropertyAll<EdgeInsets>(
+                  EdgeInsets.symmetric(horizontal: 16.0)
+                ),
+                onChanged: (value){
+                  setState(() {
+                    searchTerm = value.toLowerCase();
+                  });
+                }
+              )
+            ),
             Expanded(
               child: ListView(
-                children: getModulesToShow()
+                children: getModulesToShow(searchTerm)
               )
             )
           ]
