@@ -52,7 +52,7 @@ class _LoadModulePageState extends State<LoadModulePage> {
   List<Widget> getModulesToShow(String searchParam){
     List<Widget> widgets = [];
     for(int i=0; i<templateModules.length; i++){
-      if(templateModules[i].university == selectedUniversity && ((templateModules[i].moduleName!.toLowerCase().contains(searchParam) || templateModules[i].moduleCode!.toLowerCase().contains(searchParam)) || (templateModules[i].level == selectedLevel))){
+      if(templateModules[i].university == selectedUniversity && ((templateModules[i].moduleName!.toLowerCase().contains(searchParam) || templateModules[i].moduleCode!.toLowerCase().contains(searchParam)) && (selectedLevel == "null" || selectedLevel == templateModules[i].level))){
         // only render template module if it belongs to current university
         widgets.add(ListTile(
           title: Text(templateModules[i].moduleName!),
