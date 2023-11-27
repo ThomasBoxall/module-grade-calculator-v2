@@ -37,10 +37,6 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
       });
       return menuItems;
     }
-
-    // Define a variable to be used to warn users about the "save" state of the module. 
-    String moduleSaveStateWarning = myModules[currentModule].isListedToUser ? "Module saved" : "Module not saved"; // make this look prettier somehow? snackbar time???
-
     // if module options are not null then we want to render them
     if(myModules[currentModule].moduleName != null){
       moduleNameController.text = myModules[currentModule].moduleName!;
@@ -67,9 +63,6 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
           child:ListView(
             
             children: <Widget>[
-              Text(
-                moduleSaveStateWarning
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextFormField(

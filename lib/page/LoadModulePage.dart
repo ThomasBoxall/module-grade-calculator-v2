@@ -14,10 +14,12 @@ class LoadModulePage extends StatefulWidget {
 class _LoadModulePageState extends State<LoadModulePage> {
 
   late TextEditingController universitiesDropdownController = TextEditingController();
+  late TextEditingController levelDropdownController = TextEditingController();
 
   final _loadModuleFormKey = GlobalKey<FormState>();
 
   String selectedUniversity = "null";
+  String selectedLevel = "null";
 
   String searchTerm = "";
 
@@ -33,10 +35,24 @@ class _LoadModulePageState extends State<LoadModulePage> {
     return universityFilterItems;
   }
 
+  List<DropdownMenuEntry<String>> buildModuleLevelFilterItems(){
+    List<DropdownMenuEntry<String>> moduleFilterItems = [];
+
+    moduleLevels.forEach((element) {
+      moduleFilterItems.add(DropdownMenuEntry<String>(
+        label: element,
+        value: element
+      )
+      );
+    });
+
+    return moduleFilterItems;
+  }
+
   List<Widget> getModulesToShow(String searchParam){
     List<Widget> widgets = [];
     for(int i=0; i<templateModules.length; i++){
-      if(templateModules[i].university == selectedUniversity && (templateModules[i].moduleName!.toLowerCase().contains(searchParam) || templateModules[i].moduleCode!.toLowerCase().contains(searchParam))){
+      if(templateModules[i].university == selectedUniversity && ((templateModules[i].moduleName!.toLowerCase().contains(searchParam) || templateModules[i].moduleCode!.toLowerCase().contains(searchParam)) || (templateModules[i].level == selectedLevel))){
         // only render template module if it belongs to current university
         widgets.add(ListTile(
           title: Text(templateModules[i].moduleName!),
@@ -55,10 +71,18 @@ class _LoadModulePageState extends State<LoadModulePage> {
       }
     }
     if(widgets.isEmpty){
-      widgets.add(const ListTile(
-        title: Text("Use the Universities box above to select a University to continue"),
-        tileColor: Colors.red,
-      ));
+      widgets.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0)
+          ),
+          child: const ListTile(
+            title: Text("Use the Universities box above to select a University to continue"),
+            // tileColor: Colors.red, 
+          ),
+        )
+      )); 
     }
 
     return widgets;
@@ -75,31 +99,8 @@ class _LoadModulePageState extends State<LoadModulePage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            Form(
-              key: _loadModuleFormKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                child: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints){
-                    return DropdownMenu<String>(
-                      controller: universitiesDropdownController,
-                      leadingIcon: const Icon(Icons.search),
-                      label: const Text('University'),
-                      dropdownMenuEntries: buildListModulesUniversityFilterItems(),
-                      width: constraints.maxWidth,
-                      requestFocusOnTap: false,
-                      enableFilter: false,
-                      onSelected: (value){
-                        selectedUniversity = value!;
-                        setState(() { });
-                      }
-                    );
-                  }
-                ),
-              ),
-            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: SearchBar(
                 leading: const Icon(Icons.search),
                 padding: const MaterialStatePropertyAll<EdgeInsets>(
@@ -112,6 +113,46 @@ class _LoadModulePageState extends State<LoadModulePage> {
                 }
               )
             ),
+            Form(
+              key: _loadModuleFormKey,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: DropdownMenu<String>(
+                      controller: universitiesDropdownController,
+                      leadingIcon: const Icon(Icons.search),
+                      label: const Text('University'),
+                      dropdownMenuEntries: buildListModulesUniversityFilterItems(),
+                      requestFocusOnTap: false,
+                      enableFilter: false,
+                      onSelected: (value){
+                        selectedUniversity = value!;
+                        setState(() { });
+                      }
+                    )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    child: DropdownMenu<String>(
+                      controller: levelDropdownController,
+                      leadingIcon: const Icon(Icons.search),
+                      label: const Text('Level'),
+                      dropdownMenuEntries: buildModuleLevelFilterItems(),
+                      requestFocusOnTap: false,
+                      enableFilter: false,
+                      onSelected: (value){
+                        selectedLevel = value!;
+                        print(value);
+                        setState(() { });
+                      }
+                    )
+                  ),
+                ],
+              ),
+            ),
+            const Divider(),
             Expanded(
               child: ListView(
                 children: getModulesToShow(searchTerm)

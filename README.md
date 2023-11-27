@@ -5,8 +5,6 @@ Module Grade Calculator Project created for PAPPL L5 module at UoP
 * Add filter to MyModules display route to filter between quick added and template - if not something else needs to go between appBar and start of the ListTiles
 * Complete LoadModulePage
   * Add filtering base on level
-* More work on myModules
-  * Make EditModuleInfo's warning about saved state look better (snackbar?? / coloured list tile??) 
 * Sort UI
   * Theme - decide about use system theme vs set theme
   * Use system colour or portsmouth purple
@@ -15,6 +13,9 @@ Module Grade Calculator Project created for PAPPL L5 module at UoP
   * App Icon
 * Add content to about page.
 * Documentation for everything!
+* Export module to JSON
+* Settings page on about
+  * Nuke hive
 
 ## If get longer
 * Build a template builder and sling on generator.modulegradecalculator.com
