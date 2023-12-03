@@ -12,8 +12,6 @@ Module Grade Calculator Project created for PAPPL L5 module at UoP
 * Add content to about page.
 * Documentation for everything!
 * Export module to JSON
-* Settings page on about
-  * Nuke hive
 
 ## If get longer
 * Build a template builder and sling on generator.modulegradecalculator.com

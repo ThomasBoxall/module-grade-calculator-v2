@@ -87,17 +87,34 @@ class _MyModulesState extends State<MyModules> {
         title: const Text("My Modules"),
         actions: [
           IconButton(
-            onPressed: (){
-              print("MYMOD LENGTH BEFORE: ${myModules.length}");
-              myModules.clear();
-              print("MYMOD LENGTH AFTER: ${myModules.length}");
+            onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: const Text("Hol' up"),
+              content: const Text("You're about to nuke your saved modules, you sure 'bout that? The app should work after, hopefully..."),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: (){
+                    print("MYMOD LENGTH BEFORE: ${myModules.length}");
+                    myModules.clear();
+                    print("MYMOD LENGTH AFTER: ${myModules.length}");
 
-              // now it is empty, we need to add one and set the currentModule to prevent the app *completely* imploding
-              myModules.add(Module(true, false, "quick"));
-              currentModule = 0;
-              refreshRoute();
-            },
-            icon: const Icon(Icons.abc)
+                    // now it is empty, we need to add one and set the currentModule to prevent the app *completely* imploding
+                    myModules.add(Module(true, false, "quick"));
+                    currentModule = 0;
+                    refreshRoute();
+                    Navigator.pop(context, "OK");
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          ),
+          icon: const Icon(Icons.delete)
           )
         ],
       ),
