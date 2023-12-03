@@ -114,7 +114,7 @@ class _MyModulesState extends State<MyModules> {
               ],
             ),
           ),
-          icon: const Icon(Icons.delete)
+          icon: const Icon(Icons.delete_forever_outlined)
           )
         ],
       ),

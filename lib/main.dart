@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -85,9 +86,12 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await initHiveDB();
+  print("success init hive");
   dbImportToArray();
+  print("success import DB to arr");
 
   await importTemplateModules();
+  print("success importing template modules");
   print("templateModules length ${templateModules.length} \n first item:");
   print(templateModules[0]);
   // print(testArr);
@@ -97,8 +101,13 @@ void main() async {
 }
 
 Future<void> initHiveDB() async{
-  Directory directory = await pathProvider.getApplicationDocumentsDirectory();
-  await Hive.initFlutter(directory.path);
+  if(!kIsWeb){
+    Directory directory = await pathProvider.getApplicationDocumentsDirectory();
+    await Hive.initFlutter(directory.path);
+  } else{
+    await Hive.initFlutter();
+  }
+  
   Hive.registerAdapter(ModuleAdapter());
   Hive.registerAdapter(AssessmentAdapter());
   // Hive.deleteBoxFromDisk("myModulesBox");
