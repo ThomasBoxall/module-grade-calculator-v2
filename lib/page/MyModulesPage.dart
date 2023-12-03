@@ -85,6 +85,21 @@ class _MyModulesState extends State<MyModules> {
         
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("My Modules"),
+        actions: [
+          IconButton(
+            onPressed: (){
+              print("MYMOD LENGTH BEFORE: ${myModules.length}");
+              myModules.clear();
+              print("MYMOD LENGTH AFTER: ${myModules.length}");
+
+              // now it is empty, we need to add one and set the currentModule to prevent the app *completely* imploding
+              myModules.add(Module(true, false, "quick"));
+              currentModule = 0;
+              refreshRoute();
+            },
+            icon: const Icon(Icons.abc)
+          )
+        ],
       ),
       body:
         ListView(

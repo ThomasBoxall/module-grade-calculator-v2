@@ -92,6 +92,7 @@ void main() async {
   print(templateModules[0]);
   // print(testArr);
 
+  print("NOMOD: ${myModules.length}");
   runApp(const MyApp());
 }
 
