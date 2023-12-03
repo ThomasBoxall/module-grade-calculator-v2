@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "module_grade_calculator_pappl" "\0"
+            VALUE "CompanyName", "net.thomasboxall" "\0"
+            VALUE "FileDescription", "Module Grade Calculator" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "module_grade_calculator_pappl" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
+            VALUE "InternalName", "Module Grade Calculator" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 net.thomasboxall. All rights reserved." "\0"
             VALUE "OriginalFilename", "module_grade_calculator_pappl.exe" "\0"
-            VALUE "ProductName", "module_grade_calculator_pappl" "\0"
+            VALUE "ProductName", "Module Grade Calculator" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
