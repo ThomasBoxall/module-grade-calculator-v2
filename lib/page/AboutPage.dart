@@ -20,14 +20,30 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
         
         child: Column(
           
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'About',
+            Row(
+              children: <Widget>[
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text("IMG")
+                  ),
+                ),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      "Module Grade Calculator", 
+                      style: Theme.of(context).textTheme.titleLarge
+                    ),
+                  ),
+                ),
+              ],
             )
           ],
         ),
