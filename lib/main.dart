@@ -75,28 +75,13 @@ void clearAssessmentEditOptions(){
 }
 
 void main() async {
-  // lines below add assessments for testing
-  // myModules.add(Module(true, true));
-  myModules.add(Module.setAllValues("Test module", "MXXXX", 40, "Level 4", false, true, "quick"));
-  myModules[0].addAssessment(Assessment("Exam", 20, 80, "cbt", true));
-  myModules[0].addAssessment(Assessment("Exam", 20, 81, "cbt", true));
-  myModules[0].addAssessment(Assessment("Exam", 20, 82, "cbt", true));
-  print("myModules length ${myModules.length}");
-  print("myModules[0] assessments length: ${myModules[0].assessments.length}");
 
   WidgetsFlutterBinding.ensureInitialized();
   await initHiveDB();
-  print("success init hive");
   dbImportToArray();
-  print("success import DB to arr");
 
   await importTemplateModules();
-  print("success importing template modules");
-  print("templateModules length ${templateModules.length} \n first item:");
-  print(templateModules[0]);
-  // print(testArr);
 
-  print("NOMOD: ${myModules.length}");
   runApp(const MyApp());
 }
 

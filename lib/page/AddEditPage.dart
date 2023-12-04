@@ -70,7 +70,6 @@ class _AddEditPageState extends State<AddEditPage> {
       assessmentIconController.text = getAssessmentTypeName(myModules[currentModule].assessments[assessmentToEdit].assessmentType);
       assessmentTakenCheckboxValue = myModules[currentModule].assessments[assessmentToEdit].taken;
       assessmentFirstSetState = false;
-      print("setting all the things");
     }
 
     return Scaffold(
@@ -98,11 +97,6 @@ class _AddEditPageState extends State<AddEditPage> {
                       requestFocusOnTap: false,
                       enableFilter: false,
                       onSelected: (AssessmentType? value) {
-                        // setState(() {
-                        //   print(value!.code);
-                        //   assessmentTypeCode = value.code;
-                        // });
-                        print(value!.code);
                         updateAssessmentTypeCode(value!.code);
                       },
                     );
@@ -133,8 +127,6 @@ class _AddEditPageState extends State<AddEditPage> {
                     } else if(!isDouble(value)){
                       return 'Please enter a whole number';
                     } else {
-                      print("into the if");
-                      print(totalModuleAssessmentsPercentage);
                       if(double.parse(value) > 100 || double.parse(value) < 0){
                         return 'Please enter a value between 0 and 100';
                       } else if(totalModuleAssessmentsPercentage + double.parse(value) > 100){
@@ -150,7 +142,6 @@ class _AddEditPageState extends State<AddEditPage> {
                 child: CheckboxListTile(
                   value: assessmentTakenCheckboxValue,
                   onChanged: (bool? value){
-                    print("checkbox value ${value}");
                     setState(() {
                       assessmentTakenCheckboxValue = value!;
                       markPercentageOfAssessmentController.clear();
@@ -237,7 +228,6 @@ class _AddEditPageState extends State<AddEditPage> {
                             clearAssessmentEditOptions();
                             dbFlush();
                             dbAdd();
-                            dbTestPrint();
                             Navigator.pop(context);
                           });
                         }

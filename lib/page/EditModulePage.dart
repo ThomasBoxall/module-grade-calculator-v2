@@ -138,7 +138,6 @@ class _EditModulePageState extends State<EditModulePage> {
                     onSelected:(value){
                       if(value == 1){
                         // edit
-                        print("$index - 1");
                         assessmentToEdit = index;
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AddEditPage(isEdit: true))).then((value) => refreshRoute());
                       } else if (value == 2){

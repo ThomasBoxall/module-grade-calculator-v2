@@ -59,7 +59,6 @@ class _MyModulesState extends State<MyModules> {
             onSelected:(value){
               if(value == 1){
                 // edit
-                // print("$index - 1");
                 currentModule = i;
                 currentPageIndex = 2;
                 refreshRoute();
@@ -99,13 +98,12 @@ class _MyModulesState extends State<MyModules> {
                 ),
                 TextButton(
                   onPressed: (){
-                    print("MYMOD LENGTH BEFORE: ${myModules.length}");
                     myModules.clear();
-                    print("MYMOD LENGTH AFTER: ${myModules.length}");
 
                     // now it is empty, we need to add one and set the currentModule to prevent the app *completely* imploding
                     myModules.add(Module(true, false, "quick"));
                     currentModule = 0;
+                    dbAdd();
                     refreshRoute();
                     Navigator.pop(context, "OK");
                   },
@@ -130,7 +128,6 @@ class _MyModulesState extends State<MyModules> {
           myModules.add(Module(true, false, "quick"));
           currentModule = myModules.length-1;
           currentPageIndex = 2;
-          print(myModules.length);
           Navigator.pushReplacementNamed(context, "/");
         }
       ),

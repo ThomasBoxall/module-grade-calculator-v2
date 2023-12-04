@@ -144,7 +144,6 @@ class _LoadModulePageState extends State<LoadModulePage> {
                       enableFilter: false,
                       onSelected: (value){
                         selectedLevel = value!;
-                        print(value);
                         setState(() { });
                       }
                     )
