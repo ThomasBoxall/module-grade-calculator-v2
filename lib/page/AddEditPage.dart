@@ -59,7 +59,7 @@ class _AddEditPageState extends State<AddEditPage> {
 
     if(widget.isEdit){
       // set the totalModAssPerc to use total - val for current ass
-      totalModuleAssessmentsPercentage - myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule;
+      totalModuleAssessmentsPercentage = totalModuleAssessmentsPercentage - myModules[currentModule].assessments[assessmentToEdit].assessmentPercentageOfModule;
     }
 
     if(widget.isEdit && assessmentFirstSetState){
@@ -133,6 +133,8 @@ class _AddEditPageState extends State<AddEditPage> {
                     } else if(!isDouble(value)){
                       return 'Please enter a whole number';
                     } else {
+                      print("into the if");
+                      print(totalModuleAssessmentsPercentage);
                       if(double.parse(value) > 100 || double.parse(value) < 0){
                         return 'Please enter a value between 0 and 100';
                       } else if(totalModuleAssessmentsPercentage + double.parse(value) > 100){

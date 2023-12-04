@@ -85,10 +85,7 @@ class Module{
     /// Function to return the overall assessment percentage for a given module.
     double total = 0;
     for(int i=0; i<assessments.length; i++){
-      print(assessments[i].assessmentPercentageOfModule);
-      if(assessments[i].taken){
         total += assessments[i].assessmentPercentageOfModule;        
-      }
     }
     return total;
   }
@@ -98,7 +95,6 @@ class Module{
   double getTotalMarkPercentageOfTakenAss(){
     double total = 0;
     for(int i=0; i<assessments.length; i++){
-      print(assessments[i].markPercentageOfAssessment);
       if(assessments[i].taken){
         total += ((assessments[i].assessmentPercentageOfModule/100) * assessments[i].markPercentageOfAssessment.toDouble());
       }
