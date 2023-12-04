@@ -73,6 +73,20 @@ class _MyModulesState extends State<MyModules> {
         ));
       }
     }
+
+    if(modulesToDisplay.isEmpty){
+      modulesToDisplay.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0)
+          ),
+          child: const ListTile(
+            title: Text("Save a module through the Edit Module screen for it to show here"),
+          ),
+        )
+      )); 
+    }
     return modulesToDisplay;
   }
 
