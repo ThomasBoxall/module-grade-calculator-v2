@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import '../main.dart';
 import 'package:flutter/material.dart';
 import 'EditModuleInfoPage.dart';
 import 'AddEditPage.dart';
+
+import 'package:url_launcher/url_launcher.dart';
 
 class EditModulePage extends StatefulWidget {
   const EditModulePage({super.key});
@@ -38,7 +42,19 @@ class _EditModulePageState extends State<EditModulePage> {
             icon: const Icon(Icons.tune)
           ),
           IconButton(
-            onPressed: (){print(myModules[currentModule].toJson());},
+            onPressed: () async{
+              print(myModules[currentModule].toJson());
+              String email = Uri.encodeComponent("submissions@modulegradecalculator.com");  
+              String subject = Uri.encodeComponent("Module Submission");
+              String body = Uri.encodeComponent(jsonEncode(myModules[currentModule]));
+              print(body);
+              Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+              if (await launchUrl(mail)){
+                print("whoop whoop");
+              } else{
+                print("ded");
+              }
+            },
             icon: const Icon(Icons.open_in_new)
           )
         ],

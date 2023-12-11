@@ -31,11 +31,11 @@ class Assessment{
 
   Map toJson(){
     return{
-      'assessmentName': this.assessmentName,
-      'assessmentPercentageOfModule': this.assessmentPercentageOfModule,
-      'markPercentageOfAssessment': this.markPercentageOfAssessment,
-      'taken': this.taken,
-      'assessmentType': this.assessmentType
+      "assessmentName": this.assessmentName,
+      "assessmentPercentageOfModule": this.assessmentPercentageOfModule,
+      "markPercentageOfAssessment": this.markPercentageOfAssessment,
+      "taken": this.taken,
+      "assessmentType": this.assessmentType
     };
   }
 
