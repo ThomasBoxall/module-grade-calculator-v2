@@ -32,10 +32,14 @@ class _EditModulePageState extends State<EditModulePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(editModulePageName),
-        actions: [
+        actions: [  
           IconButton(
             onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => const EditModuleInfoPage())).then((value) => refreshRoute());},
             icon: const Icon(Icons.tune)
+          ),
+          IconButton(
+            onPressed: (){print(myModules[currentModule].toJson());},
+            icon: const Icon(Icons.open_in_new)
           )
         ],
       ),

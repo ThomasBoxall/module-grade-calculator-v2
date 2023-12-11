@@ -106,14 +106,14 @@ class Module{
     // List<Map> assessmentsToJson = assessments != null ? assessments.toJson() : null;
     
     return{
-    'moduleName': moduleName,
-    'moduleCode': moduleCode,
-    'credits': credits,
-    'level': level,
-    'isQuickEdit': isQuickEdit,
-    'isListedToUser': isListedToUser,
-    'university': university,
-    'assessments': jsonEncode(assessments)
+    '"moduleName"': "\"${moduleName}\"",
+    '"moduleCode"': "\"${moduleCode}\"",
+    '"credits"': "\"${credits}\"",
+    '"level"': "\"${level}\"",
+    '"isQuickEdit"': "\"${isQuickEdit}\"",
+    '"isListedToUser"': "\"${isListedToUser}\"",
+    '"university"': "\"${university}\"",
+    '"assessments"': jsonEncode(assessments)
     };
   }
 
