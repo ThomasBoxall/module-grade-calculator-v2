@@ -50,9 +50,8 @@ class _EditModulePageState extends State<EditModulePage> {
               print(body);
               Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
               if (await launchUrl(mail)){
-                print("whoop whoop");
               } else{
-                print("ded");
+                throw Exception("Unable to launch URL (email)");
               }
             },
             icon: const Icon(Icons.open_in_new)
@@ -109,6 +108,33 @@ class _EditModulePageState extends State<EditModulePage> {
                           ),
                           Center(
                             child: Text(
+                              "${myModules[currentModule].getAssessmentTakenAssValue().toString()}%", 
+                              style: Theme.of(context).textTheme.headlineMedium
+                            ),
+                          ),
+                        ],
+                      ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 150,
+                ),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                        children: [
+                          const Text(
+                            "Assessments Added"
+                          ),
+                          Center(
+                            child: Text(
                               "${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
                               style: Theme.of(context).textTheme.headlineMedium
                             ),
@@ -119,7 +145,7 @@ class _EditModulePageState extends State<EditModulePage> {
                 ),
               ),
             ),
-            ]
+           ]
           ),
           Expanded(
             child: ListView.builder(

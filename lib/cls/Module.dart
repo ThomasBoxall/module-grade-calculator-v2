@@ -80,12 +80,23 @@ class Module{
   /// Returns the icon of the assessment at a specified index
   IconData getAssessmentIcon(int index) => assessmentTypes[assessments[index].assessmentType]!.icon;
 
-  /// Returns the overall assessment percentage for taken assessments for a given module
+  /// Returns the overall assessment percentage for all assessments for a given module
   double getAssessmentTotalAssValue(){
     /// Function to return the overall assessment percentage for a given module.
     double total = 0;
     for(int i=0; i<assessments.length; i++){
         total += assessments[i].assessmentPercentageOfModule;        
+    }
+    return total;
+  }
+
+  /// Returns the overall assessment percentage for taken assessments for a given module
+  double getAssessmentTakenAssValue(){
+    double total = 0;
+    for(int i=0; i<assessments.length; i++){
+      if(assessments[i].taken){
+        total += assessments[i].assessmentPercentageOfModule;
+      }
     }
     return total;
   }
