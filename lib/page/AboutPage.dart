@@ -1,6 +1,8 @@
 import '../main.dart';
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key, required this.title});
 
@@ -80,7 +82,13 @@ class _AboutPageState extends State<AboutPage> {
                             alignment: Alignment.bottomRight,
                             child: TextButton(
                               style: TextButton.styleFrom(),
-                              onPressed: () {},
+                              onPressed: () async {
+                                Uri gitHubLink = Uri.parse("https://github.com/ThomasBoxall/module-grade-calculator-paapl");
+                                if (await launchUrl(gitHubLink)){
+                                } else{
+                                  throw Exception("Failure to launch URL");
+                                }
+                              },
                               child: const Text('GitHub'),
                             ),
                           )
@@ -106,17 +114,9 @@ class _AboutPageState extends State<AboutPage> {
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                           const Text(
-                            "Ever wanted to add your modules as a template module, now you can! Maybe?",
+                            "To add your module to the template module library, hit the export button on the Calculator page. This will send an email to submissions@modulegradecalculator.com with all the information needed. Don't edit the email body or stuff will be broken!",
                             softWrap: true,
                           ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: TextButton(
-                              style: TextButton.styleFrom(),
-                              onPressed: () {},
-                              child: const Text('Email'),
-                            ),
-                          )
                         ],
                       ),
                     ),

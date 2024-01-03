@@ -201,7 +201,7 @@ class _AddEditPageState extends State<AddEditPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
-                              backgroundColor: Colors.black.withOpacity(0.7),
+                              backgroundColor: Theme.of(context).colorScheme.secondary,
                             ),
                           );
                           if(!widget.isEdit){
