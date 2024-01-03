@@ -1,4 +1,4 @@
-import 'package:module_grade_calculator_pappl/cls/Module.dart';
+import '../cls/Module.dart';
 
 import '../main.dart';
 import 'package:flutter/material.dart';

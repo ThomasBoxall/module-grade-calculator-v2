@@ -1,5 +1,5 @@
-# module-grade-calculator-pappl
-Module Grade Calculator Project created for PAPPL L5 module at UoP
+# module-grade-calculator-paapl
+Module Grade Calculator Project created for PAAPL L5 module at UoP
 
 # TODO
 * UI Clean Up
