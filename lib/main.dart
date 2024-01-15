@@ -59,7 +59,7 @@ bool isDouble(String? s){
   return double.tryParse(s) != null;
 }
 
-List <Module> myModules = [];
+List <Module> myModules = []; 
 int currentModule = -1; //this is used to set which module in myModules should be displayed on EdiModule. -1 means quick calculator
 int assessmentToEdit = -1; // used to set which assessment should be edited when editMode in AddEditPage is true. Set back to -1 when not in use.
 bool assessmentFirstSetState = true;
@@ -122,17 +122,24 @@ class MyApp extends StatelessWidget {
       myModules.add(Module(true, false, "quick"));
       currentModule = myModules.length-1;
     }
-
-
+    
     return MaterialApp(
       title: 'Module Grade Calculator',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.blueGrey,
-          brightness: Brightness.dark,
+          brightness: Brightness.light
         ),
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueGrey,
+          brightness: Brightness.dark
+        ),
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.system,
       home: const EditModulePage(),
       routes: <String, WidgetBuilder> {
         "/load-module":(context) => const LoadModulePage(),
