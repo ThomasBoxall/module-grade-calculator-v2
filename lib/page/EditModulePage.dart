@@ -217,7 +217,7 @@ Widget _assessmentsAddedCard(){
               }
             }
           ),
-
+          const Divider(),
           
           Expanded(
             child: ListView.builder(
