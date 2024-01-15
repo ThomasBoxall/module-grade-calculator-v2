@@ -98,6 +98,8 @@ class _EditModuleInfoPageState extends State<EditModuleInfoPage> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a value';
+                    } else if(value=="NaN"){
+                      return "Stop trying to break my program. It's delicate";
                     } else if(!isInt(value)){
                       return "Please enter a whole number";
                     } else if (int.parse(value) % 20 != 0 || int.parse(value) == 0){

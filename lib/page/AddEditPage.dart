@@ -124,6 +124,8 @@ class _AddEditPageState extends State<AddEditPage> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter a value';
+                    } else if(value=="NaN"){
+                      return "Stop trying to break my program. It's delicate";
                     } else if(!isDouble(value)){
                       return 'Please enter a whole number';
                     } else {
@@ -163,7 +165,9 @@ class _AddEditPageState extends State<AddEditPage> {
                       }
                       if(!isDouble(value)){
                         return 'Please enter a value';
-                      } else{
+                      } else if(value=="NaN"){
+                        return "Stop trying to break my program. It's delicate";
+                      }  else{
                         if(double.parse(value) > 100 || double.parse(value) < 0){
                           return 'Please enter a value between 0 and 100';
                         }
