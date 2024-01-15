@@ -25,7 +25,155 @@ class _EditModulePageState extends State<EditModulePage> {
     });
   }
 
+Widget _totalMarkPercentCard(){
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          const Text(
+            "My Marks"
+          ),
+          Center(
+            child: Text(
+              "${myModules[currentModule].getTotalMarkPercentageOfTakenAss().toString()}%", 
+              style: Theme.of(context).textTheme.headlineMedium
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _assessmentsTakenCard(){
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+          children: [
+            const Text(
+              "Assessments Taken"
+            ),
+            Center(
+              child: Text(
+                "${myModules[currentModule].getAssessmentTakenAssValue().toString()}%", 
+                style: Theme.of(context).textTheme.headlineMedium
+              ),
+            ),
+          ],
+        ),
+    ),
+  );
+}
+
+Widget _assessmentsAddedCard(){
+  return Card(
+    child: Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          const Text(
+            "Assessments Added"
+          ),
+          Center(
+            child: Text(
+              "${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
+              style: Theme.of(context).textTheme.headlineMedium
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+
+  Widget _buildFullWidthHeadRow(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child:ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 75,
+              minWidth: 150,
+            ),
+            child: _totalMarkPercentCard()
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child:ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 75,
+              minWidth: 150,
+            ),
+            child: _assessmentsTakenCard()
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child:ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 75,
+              minWidth: 150,
+            ),
+            child: _assessmentsAddedCard()
+          ),
+        ),
+      ]      
+      );
+  }
   
+  Widget _buildSmallWidthHeadRow(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+              child:ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 330,
+                ),
+                child: _totalMarkPercentCard()
+              ),
+            ),
+          ]
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+              child:ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 150,
+                ),
+                child: _assessmentsTakenCard()
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+              child:ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: 75,
+                  minWidth: 150,
+                ),
+                child: _assessmentsAddedCard()
+              ),
+            ),
+          ],
+        )
+      ]
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,92 +207,18 @@ class _EditModulePageState extends State<EditModulePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: 75,
-                  minWidth: 150,
-                ),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        const Text(
-                          "My Marks"
-                        ),
-                        Center(
-                          child: Text(
-                            "${myModules[currentModule].getTotalMarkPercentageOfTakenAss().toString()}%", 
-                            style: Theme.of(context).textTheme.headlineMedium
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: 75,
-                  minWidth: 150,
-                ),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                        children: [
-                          const Text(
-                            "Assessments Taken"
-                          ),
-                          Center(
-                            child: Text(
-                              "${myModules[currentModule].getAssessmentTakenAssValue().toString()}%", 
-                              style: Theme.of(context).textTheme.headlineMedium
-                            ),
-                          ),
-                        ],
-                      ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(
-                  minHeight: 75,
-                  minWidth: 150,
-                ),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                        children: [
-                          const Text(
-                            "Assessments Added"
-                          ),
-                          Center(
-                            child: Text(
-                              "${myModules[currentModule].getAssessmentTotalAssValue().toString()}%", 
-                              style: Theme.of(context).textTheme.headlineMedium
-                            ),
-                          ),
-                        ],
-                      ),
-                  ),
-                ),
-              ),
-            ),
-           ]
+
+          LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints){
+              if(constraints.maxWidth > 600){
+                return _buildFullWidthHeadRow();
+              } else{
+                return _buildSmallWidthHeadRow();
+              }
+            }
           ),
+
+          
           Expanded(
             child: ListView.builder(
               itemCount: myModules[currentModule].getNoOfAssessments(),
