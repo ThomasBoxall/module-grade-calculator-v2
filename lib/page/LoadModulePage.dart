@@ -88,6 +88,73 @@ class _LoadModulePageState extends State<LoadModulePage> {
     return widgets;
   }
 
+  Widget _universitiesDropdownMenu(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: DropdownMenu<String>(
+        controller: universitiesDropdownController,
+        leadingIcon: const Icon(Icons.search),
+        label: const Text('University'),
+        dropdownMenuEntries: buildListModulesUniversityFilterItems(),
+        requestFocusOnTap: false,
+        enableFilter: false,
+        onSelected: (value){
+          selectedUniversity = value!;
+          setState(() { });
+        }
+      )
+    );
+  }
+
+  Widget _levelDropdownMenu(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: DropdownMenu<String>(
+        controller: levelDropdownController,
+        leadingIcon: const Icon(Icons.search),
+        label: const Text('Level'),
+        dropdownMenuEntries: buildModuleLevelFilterItems(),
+        requestFocusOnTap: false,
+        enableFilter: false,
+        onSelected: (value){
+          selectedLevel = value!;
+          setState(() { });
+        }
+      )
+    );
+  }
+
+  Widget _buildFullWidthHeadRow(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _universitiesDropdownMenu(),
+        _levelDropdownMenu()  
+      ],
+    );
+  }
+
+  Widget _buildSmallWidthHeadRow(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _universitiesDropdownMenu()
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _levelDropdownMenu()
+          ],
+        ),
+      ],
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     
@@ -115,40 +182,14 @@ class _LoadModulePageState extends State<LoadModulePage> {
             ),
             Form(
               key: _loadModuleFormKey,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: DropdownMenu<String>(
-                      controller: universitiesDropdownController,
-                      leadingIcon: const Icon(Icons.search),
-                      label: const Text('University'),
-                      dropdownMenuEntries: buildListModulesUniversityFilterItems(),
-                      requestFocusOnTap: false,
-                      enableFilter: false,
-                      onSelected: (value){
-                        selectedUniversity = value!;
-                        setState(() { });
-                      }
-                    )
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: DropdownMenu<String>(
-                      controller: levelDropdownController,
-                      leadingIcon: const Icon(Icons.search),
-                      label: const Text('Level'),
-                      dropdownMenuEntries: buildModuleLevelFilterItems(),
-                      requestFocusOnTap: false,
-                      enableFilter: false,
-                      onSelected: (value){
-                        selectedLevel = value!;
-                        setState(() { });
-                      }
-                    )
-                  ),
-                ],
+              child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints){
+                  if(constraints.maxWidth > 600){
+                    return _buildFullWidthHeadRow();
+                  } else{
+                    return _buildSmallWidthHeadRow();
+                  }
+                }
               ),
             ),
             const Divider(),
