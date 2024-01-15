@@ -9,12 +9,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 import 'cls/Assessment.dart';
-import 'cls/AssessmentType.dart';
+// import 'cls/AssessmentType.dart'; //commented out as not required
 import 'cls/Module.dart';
 
 import 'page/AboutPage.dart';
-import 'page/AddEditPage.dart';
-import 'page/EditModuleInfoPage.dart';
+// import 'page/AddEditPage.dart'; //commented out as not required
+// import 'page/EditModuleInfoPage.dart'; //commented out as not required
 import 'page/EditModulePage.dart';
 import 'page/LoadModulePage.dart';
 import 'page/MyModulesPage.dart';
@@ -157,18 +157,4 @@ void dbImportToArray() async{
   for(int i=0; i<Hive.box("myModulesBox").length; i++){
     myModules.add(Hive.box("myModulesBox").getAt(i));
   }
-}
-
-void dbTestPrint() async{
-  print("START OF HIVE TEST PRINT");
-  for(int i=0; i<Hive.box("myModulesBox").length; i++){
-    print(Hive.box("myModulesBox").getAt(i));
-  }
-  print("END OF HIVE TEST PRINT");
- print("START OF myModules TEST PRINT");
-  for(int i=0; i<myModules.length; i++){
-    print(myModules[i]);
-  }
-  print("END OF myModules TEST PRINT");
-   
 }

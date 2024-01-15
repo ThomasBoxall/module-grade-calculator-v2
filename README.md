@@ -1,9 +1,8 @@
-# module-grade-calculator-paapl
-Module Grade Calculator Project created for PAAPL L5 module at UoP
+# Module Grade Calculator
 
-# TODO
-* UI Clean Up
-  * Add light / dark mode toggle - have this in the app bar of about page
-  * Check spacing & padding around things - ensure consistency
-  * Ensure consistent use of outlined icons with filled icons when selected
-* Implement hive properly - not just bolted on.
+Module Grade Calculator is a calculator which will calculate the overall grade a student has achieved in a module based on the assessments they have taken and the weightings of them.
+
+## Running The App
+The app is hosted live at [`modulegradecalculator.com`](https://modulegradecalculator.com). The version hosted here will always be the most up-to-date. 
+
+The app can be run locally, tested on a Windows 11 laptop using the command `flutter run` when in the project folder from Powershell.

@@ -43,11 +43,9 @@ class _EditModulePageState extends State<EditModulePage> {
           ),
           IconButton(
             onPressed: () async{
-              print(myModules[currentModule].toJson());
               String email = Uri.encodeComponent("submissions@modulegradecalculator.com");  
               String subject = Uri.encodeComponent("Module Submission");
               String body = Uri.encodeComponent(jsonEncode(myModules[currentModule]));
-              print(body);
               Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
               if (await launchUrl(mail)){
               } else{
