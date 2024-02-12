@@ -21,6 +21,12 @@ class Assessment{
   Assessment(this.assessmentName, this.assessmentPercentageOfModule, this.markPercentageOfAssessment, this.assessmentType,  this.taken);
 
   /// Updates all values in the assessment
+  /// 
+  /// [assessmentName] is the name of the assessment
+  /// [assessmentPercentageOfModule] is the percentage of the module's overall assessments of which this assessment comprises
+  /// [markPercentageOfAssessment] is the user-inputted percentage which they scored in the assessment
+  /// [assessmentType] is the internal type type of the assessment which the app uses to display a suitable icon
+  /// [taken] is a boolean value for if the assessment has been taken or not 
   void updateAssessment(assessmentName, assessmentPercentageOfModule, markPercentageOfAssessment, assessmentType, taken){
     this.assessmentName = assessmentName;
     this.assessmentPercentageOfModule = assessmentPercentageOfModule;
@@ -29,6 +35,7 @@ class Assessment{
     this.taken = taken;
   }
 
+  /// Converts single Assessment to JSON format
   Map toJson(){
     return{
       "assessmentName": this.assessmentName,
@@ -39,6 +46,7 @@ class Assessment{
     };
   }
 
+  /// Constructs Assessment from [json] passed into it. 
   factory Assessment.fromJson(Map<String, dynamic> json){
     return Assessment(
       json['assessmentName'] as String,
